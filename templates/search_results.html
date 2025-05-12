@@ -11,8 +11,8 @@
             /* Light Theme Variables */
             --primary-blue: #0077cc;
             --dark-blue: #005fa3;
-            --white: #ffffff; /* Used for body bg in light, and general white elements */
-            --light-bg: #f8fafc; /* Used for subtle backgrounds or main page bg if body is different */
+            --white: #ffffff;
+            --light-bg: #f8fafc;
             --content-bg: #ffffff; /* Background for header, footer, cards, no-results box */
             --input-bg: #ffffff;
             --input-text: var(--text-dark);
@@ -36,13 +36,13 @@
             --primary-blue: #2196f3;
             --dark-blue: #1976d2;
             --white: #121212; /* Main page background in dark mode */
-            --light-bg: #1e1e1e; /* Subtle backgrounds in dark mode */
-            --content-bg: #1e1e1e; /* Dark bg for header, footer, cards, no-results box */
+            --light-bg: #1e1e1e;
+            --content-bg: #1e1e1e;
             --input-bg: #2b2b2b;
             --input-text: #e0e0e0;
             --input-border: #4a4a4a;
             --input-focus-border: var(--primary-blue);
-            --input-focus-shadow: rgba(33, 150, 243, 0.3); /* Adjusted for dark primary blue */
+            --input-focus-shadow: rgba(33, 150, 243, 0.3);
             --text-dark: #e0e0e0;
             --text-light: #b0b0b0;
             --border-light: #3a3a3a;
@@ -61,7 +61,7 @@
             background-color: var(--white);
             color: var(--text-dark);
             line-height: 1.6;
-            padding-top: 80px;
+            padding-top: 80px; /* Consistent with corrected main page */
             padding-bottom: 60px;
             transition: background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
         }
@@ -70,10 +70,10 @@
             width: 92%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 0;
+            padding: 20px 0; /* Added more vertical padding for content */
         }
 
-        /* --- Site Header --- */
+        /* --- Site Header (Consistent with corrected main page) --- */
         .site-header {
             background-color: var(--content-bg);
             color: var(--primary-blue);
@@ -101,7 +101,7 @@
         .site-header .logo-area h1 {
             margin: 0;
             white-space: nowrap;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Original size */
         }
 
         .site-header .logo-area h1 a {
@@ -114,7 +114,7 @@
 
         .site-header .search-area {
             flex-grow: 1;
-            max-width: 500px;
+            max-width: 500px; /* Original max-width */
         }
 
         .header-search-form {
@@ -124,11 +124,11 @@
 
         .header-search-form input[type="search"] {
             flex-grow: 1;
-            padding: 10px 15px;
+            padding: 10px 15px; /* Original padding */
             font-family: var(--font-family);
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Original font size */
             border: 1px solid var(--input-border);
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px 0 0 8px; /* Original radius */
             background-color: var(--input-bg);
             color: var(--input-text);
             outline: none;
@@ -141,13 +141,13 @@
         }
 
         .header-search-form button[type="submit"] {
-            padding: 10px 16px;
+            padding: 10px 16px; /* Original padding */
             font-family: var(--font-family);
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Original font size */
             background-color: var(--primary-blue);
-            color: #ffffff; /* Ensure white text for button */
+            color: #ffffff; /* Ensure white text */
             border: none;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 8px 8px 0; /* Original radius */
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-weight: 500;
@@ -157,14 +157,14 @@
             background-color: var(--dark-blue);
         }
         
-        .header-controls { /* For theme toggle */
+        .header-controls {
              display: flex;
              align-items: center;
         }
 
-        /* --- Theme Toggle Button Styles (Copied) --- */
+        /* --- Theme Toggle Button Styles (Consistent with corrected main page) --- */
         .theme-toggle {
-            position: relative; width: 70px; height: 34px;
+            position: relative; width: 70px; height: 34px; /* Original size */
             border-radius: 50px;
             background: linear-gradient(145deg, #6c5ce7, #5649b8);
             border: none; cursor: pointer; overflow: hidden;
@@ -173,13 +173,15 @@
         }
         .theme-toggle::before {
             content: ''; position: absolute; top: 2px; left: 2px;
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 30px; height: 30px; /* Original size */
+            border-radius: 50%;
             background-color: #ffd700; /* Sun */
             transition: all var(--toggle-transition-duration) var(--toggle-easing);
             z-index: 2;
         }
         .theme-toggle i {
-            position: absolute; font-size: 14px; color: #fff;
+            position: absolute; font-size: 14px; /* Original icon size */
+            color: #fff;
             transition: all var(--toggle-transition-duration) var(--toggle-easing);
             z-index: 3; top: 50%; transform: translateY(-50%);
         }
@@ -194,7 +196,7 @@
         body.dark-mode .theme-toggle .sun { opacity: 1; transform: translateY(-50%) rotate(360deg); }
         body.dark-mode .theme-toggle .moon { opacity: 0; transform: translateY(-50%) rotate(-360deg); }
 
-        .theme-toggle::after { /* Glow effect */
+        .theme-toggle::after {
             content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
             border-radius: 50px;
             background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
@@ -209,7 +211,7 @@
 
         .page-title {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Original size for search results page */
             color: var(--primary-blue);
             margin-bottom: 15px;
             font-weight: 600;
@@ -250,7 +252,7 @@
         .story-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--box-shadow-hover);
-            border-color: var(--input-focus-shadow); /* Subtle colored border */
+            border-color: var(--input-focus-shadow);
         }
         body.dark-mode .story-card:hover {
             border-color: var(--input-focus-shadow);
@@ -299,7 +301,7 @@
             margin-top: 12px;
             padding: 7px 14px;
             background-color: var(--primary-blue);
-            color: #ffffff; /* Ensure white text for button */
+            color: #ffffff; /* Ensure white text */
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
@@ -319,7 +321,7 @@
             font-size: 1rem;
             color: var(--text-light);
             padding: 30px 20px;
-            background-color: var(--content-bg); /* Use variable */
+            background-color: var(--content-bg);
             border-radius: 10px;
             box-shadow: var(--box-shadow);
             border: 1px solid var(--border-light);
@@ -330,13 +332,13 @@
 
         .flash-messages {
             position: fixed;
-            top: 90px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
             width: auto;
             min-width: 280px;
             text-align: center;
+            top: 85px; /* Consistent with corrected main page desktop */
         }
 
         .flash {
@@ -353,7 +355,8 @@
         .flash.success { background-color: var(--primary-blue); }
         .flash.error { background-color: #cc3300; }
         .flash.warning { background-color: #cc9900; }
-        body.dark-mode .flash.success { color: #ffffff; } /* Ensure white for success on dark */
+        body.dark-mode .flash.success { color: #ffffff; }
+
 
         .site-footer-main {
             background-color: var(--content-bg);
@@ -372,19 +375,19 @@
             transition: color var(--toggle-transition-duration) ease;
         }
 
-        /* Mobile Optimizations */
+        /* --- Mobile Optimizations (Consistent with corrected main page) --- */
         @media (max-width: 768px) {
-            body { padding-top: 130px; }
+            body { padding-top: 155px; }
 
             .site-header .header-container {
                 flex-direction: column;
                 gap: 12px;
                 align-items: stretch;
             }
-            .site-header .logo-area { text-align: center; }
+            .site-header .logo-area { text-align: center; margin-bottom: 0; }
             .site-header .logo-area h1 { font-size: 1.4rem; }
-            .site-header .search-area { width: 100%; max-width: none; }
-            .header-controls { justify-content: center; margin-top: 5px; }
+            .site-header .search-area { width: 100%; max-width: none; order: 2; }
+            .header-controls { justify-content: center; order: 3; margin-top: 10px;}
 
             .theme-toggle { width: 60px; height: 30px; }
             .theme-toggle::before { width: 26px; height: 26px; }
@@ -397,15 +400,15 @@
             .story-grid { grid-template-columns: 1fr; gap: 16px; }
             .story-card { padding: 16px; }
             .no-results { font-size: 0.9rem; padding: 25px 15px; }
-            .flash-messages { top: 135px; width: 92%; }
+            .flash-messages { top: 160px; width: 92%; }
             .flash { width: 100%; }
         }
 
         @media (max-width: 480px) {
-            body { padding-top: 125px; }
+            body { padding-top: 150px; }
             .site-header .logo-area h1 { font-size: 1.3rem; }
-            .header-search-form input[type="search"] { padding: 8px 12px; font-size: 0.85rem; }
-            .header-search-form button[type="submit"] { padding: 8px 14px; font-size: 0.85rem; }
+            .header-search-form input[type="search"] { padding: 10px 12px; font-size: 0.9rem; } /* Reverted to original mobile search size */
+            .header-search-form button[type="submit"] { padding: 10px 14px; font-size: 0.9rem; } /* Reverted */
 
             .theme-toggle { width: 54px; height: 28px; }
             .theme-toggle::before { width: 24px; height: 24px; }
@@ -413,9 +416,10 @@
             .theme-toggle i { font-size: 11px; }
             .theme-toggle .sun { left: 7px; } .theme-toggle .moon { right: 7px; }
 
-            .story-card h2 { font-size: 1.2rem; }
-            .story-card .summary { font-size: 0.85rem; }
-            .flash-messages { top: 130px; }
+            .story-card h2 { font-size: 1.1rem; }
+            .story-card .summary { font-size: 0.8rem; -webkit-line-clamp: 2; max-height: 65px; }
+            .flash-messages { top: 155px; }
+            .page-title { font-size: 1.3rem; } /* Keep page title size consistent for this breakpoint */
         }
     </style>
 </head>
