@@ -5,20 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ part.part_title }} - {{ story.title }} - আমার বইঘর</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-blue: #0077cc; /* Premium blue from first template */
-            --dark-blue: #005fa3; /* Darker blue for hover states */
+            /* Light Theme Variables */
+            --primary-blue: #0077cc;
+            --dark-blue: #005fa3;
             --white: #ffffff;
-            --light-bg: #f8fafc; /* Very light blue-white background */
+            --light-bg: #f8fafc;
             --text-dark: #1a1a1a;
             --text-light: #4d4d4d;
             --border-light: #e0e6ed;
+            --content-bg: #ffffff; /* Background for content wrapper */
             --font-family: 'Hind Siliguri', sans-serif;
             --box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
             --box-shadow-hover: 0 6px 16px rgba(0, 60, 120, 0.12);
-            --error-color: #cc3300; /* For flash error messages */
-            --warning-color: #cc9900; /* For flash warning messages */
+            --error-color: #cc3300;
+            --warning-color: #cc9900;
+            --pagination-bg: #ffffff;
+            --pagination-text: var(--primary-blue);
+            --pagination-hover-bg: var(--primary-blue);
+            --pagination-hover-text: var(--white);
+            --pagination-current-bg: var(--primary-blue);
+            --pagination-current-text: var(--white);
+            --pagination-disabled-bg: #f0f0f0;
+            --pagination-disabled-text: #aaa;
+            --pagination-border: var(--border-light);
+
+            /* Theme Toggle Specific Variables */
+            --toggle-transition-duration: 0.6s;
+            --toggle-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Dark Theme Variable Overrides */
+        body.dark-mode {
+            --primary-blue: #2196f3; /* Slightly brighter blue for dark mode */
+            --dark-blue: #1976d2;
+            --white: #1e1e1e; /* Dark background becomes 'white' */
+            --light-bg: #121212; /* Main background */
+            --text-dark: #e0e0e0; /* Light text */
+            --text-light: #b0b0b0; /* Lighter grey text */
+            --border-light: #3a3a3a; /* Darker border */
+            --content-bg: #1e1e1e; /* Content wrapper background */
+            --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.4);
+            --pagination-bg: #2a2a2a;
+            --pagination-text: var(--primary-blue);
+            --pagination-hover-bg: var(--primary-blue);
+            --pagination-hover-text: #ffffff;
+            --pagination-current-bg: var(--primary-blue);
+            --pagination-current-text: #ffffff;
+            --pagination-disabled-bg: #3a3a3a;
+            --pagination-disabled-text: #757575;
+            --pagination-border: #4a4a4a;
         }
 
         * {
@@ -32,25 +71,25 @@
             background-color: var(--light-bg);
             color: var(--text-dark);
             line-height: 1.7;
-            /* Removed padding-top and padding-bottom for fixed header/footer */
+            transition: background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
         }
 
         .container {
             width: 90%;
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px 0; /* General padding for content area */
+            padding: 20px 0;
         }
 
-        /* Site Header (now static/relative) */
+        /* --- Site Header --- */
         .site-header {
-            background-color: var(--white);
+            background-color: var(--content-bg); /* Changed from var(--white) */
             padding: 12px 0;
-            /* Removed position: fixed and related properties */
-            box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Adjusted shadow slightly */
             border-bottom: 1px solid var(--border-light);
-            position: relative; /* or static (default) */
-            z-index: 900; /* Lower z-index as it's not overlaying in the same way */
+            position: relative;
+            z-index: 900;
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
 
         .site-header .header-container {
@@ -72,10 +111,109 @@
             text-decoration: none;
             font-weight: 700;
             letter-spacing: -0.5px;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
+        .header-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- Theme Toggle Button Styles (Integrated from Animation Code) --- */
+        .theme-toggle {
+            position: relative;
+            width: 70px; /* Slightly smaller */
+            height: 34px; /* Slightly smaller */
+            border-radius: 50px;
+            background: linear-gradient(145deg, #6c5ce7, #5649b8); /* Keeping original toggle colors */
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25);
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            margin-left: 20px; /* Add space between logo and toggle */
+        }
+
+        .theme-toggle::before { /* The moving circle */
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 30px; /* Adjusted size */
+            height: 30px; /* Adjusted size */
+            border-radius: 50%;
+            background-color: #ffd700; /* Sun color */
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 2;
+        }
+
+        .theme-toggle i { /* Icons */
+            position: absolute;
+            font-size: 14px; /* Adjusted size */
+            color: #fff;
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 3;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .theme-toggle .sun {
+            left: 9px;  /* Adjusted position */
+            opacity: 0;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .theme-toggle .moon {
+            right: 9px; /* Adjusted position */
+            opacity: 1;
+             transform: translateY(-50%) rotate(0deg);
+        }
+
+        /* Dark mode styles FOR THE TOGGLE */
+        body.dark-mode .theme-toggle {
+            background: linear-gradient(145deg, #2d3436, #1a1a1a); /* Dark background for toggle */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        body.dark-mode .theme-toggle::before {
+            transform: translateX(36px); /* Move circle to the right */
+            background-color: #f5f6fa; /* Moon color */
+        }
+
+        body.dark-mode .theme-toggle .sun {
+            opacity: 1;
+            transform: translateY(-50%) rotate(360deg);
+        }
+
+        body.dark-mode .theme-toggle .moon {
+            opacity: 0;
+            transform: translateY(-50%) rotate(-360deg);
+        }
+
+        /* Optional: Glow effect on hover */
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px; /* Expand area */
+            border-radius: 50px;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allow clicks to pass through */
+            z-index: 1;
+        }
+         body:not(.dark-mode) .theme-toggle:hover::after {
+             opacity: 0.3;
+         }
+         body.dark-mode .theme-toggle:hover::after {
+             background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+             opacity: 0.4;
+         }
+        /* --- End Theme Toggle Styles --- */
+
+        /* --- Breadcrumb --- */
         .breadcrumb {
-            margin-top: 20px; /* Added margin-top as body padding is removed */
+            margin-top: 20px;
             margin-bottom: 20px;
             font-size: 0.9rem;
             color: var(--text-light);
@@ -85,6 +223,7 @@
             color: var(--primary-blue);
             text-decoration: none;
             font-weight: 500;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .breadcrumb a:hover {
@@ -94,15 +233,18 @@
 
         .breadcrumb span {
             color: var(--text-dark);
+             transition: color var(--toggle-transition-duration) ease;
         }
 
+        /* --- Content Wrapper --- */
         .part-content-wrapper {
-            background-color: var(--white);
+            background-color: var(--content-bg); /* Use variable */
             padding: 25px 30px;
             border-radius: 10px;
             box-shadow: var(--box-shadow);
             border: 1px solid var(--border-light);
             margin-bottom: 25px;
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
         }
 
         .story-subtitle-link {
@@ -112,6 +254,7 @@
             margin-bottom: 8px;
             text-decoration: none;
             font-weight: 500;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .story-subtitle-link:hover {
@@ -122,9 +265,10 @@
         .part-title {
             font-size: 2rem;
             color: var(--primary-blue);
-            margin-bottom: 15px; /* Increased margin as meta is removed */
+            margin-bottom: 15px;
             font-weight: 600;
             line-height: 1.3;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .part-summary {
@@ -134,14 +278,15 @@
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-light);
             line-height: 1.6;
+            transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
 
-        /* .part-meta removed */
-
+        /* --- Page Content --- */
         .page-content {
             font-size: 1rem;
             line-height: 1.8;
             color: var(--text-dark);
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .page-content img {
@@ -150,7 +295,13 @@
             border-radius: 6px;
             margin: 20px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            /* Add a slight filter for dark mode images if needed */
+            transition: filter var(--toggle-transition-duration) ease;
         }
+        body.dark-mode .page-content img {
+             filter: brightness(0.9) contrast(1.1);
+        }
+
 
         .page-content p {
             margin-bottom: 1.2em;
@@ -161,11 +312,13 @@
             margin-top: 1.5em;
             margin-bottom: 0.8em;
             font-weight: 600;
+            transition: color var(--toggle-transition-duration) ease;
         }
         .page-content h1 { font-size: 1.8em; }
         .page-content h2 { font-size: 1.5em; }
         .page-content h3 { font-size: 1.3em; }
 
+        /* --- Pagination --- */
         .pagination {
             margin-top: 30px;
             text-align: center;
@@ -175,7 +328,7 @@
             display: inline-block;
             padding: 8px 15px;
             margin: 0 4px;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--pagination-border);
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
@@ -184,38 +337,38 @@
         }
 
         .pagination a {
-            background-color: var(--white);
-            color: var(--primary-blue);
+            background-color: var(--pagination-bg);
+            color: var(--pagination-text);
         }
 
         .pagination a:hover {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border-color: var(--primary-blue);
+            background-color: var(--pagination-hover-bg);
+            color: var(--pagination-hover-text);
+            border-color: var(--pagination-hover-bg);
             transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 60, 120, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .pagination .current-page {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border-color: var(--primary-blue);
+            background-color: var(--pagination-current-bg);
+            color: var(--pagination-current-text);
+            border-color: var(--pagination-current-bg);
         }
 
         .pagination .disabled {
-            color: #aaa;
+            color: var(--pagination-disabled-text);
             pointer-events: none;
-            background-color: #f0f0f0;
-            border-color: var(--border-light);
+            background-color: var(--pagination-disabled-bg);
+            border-color: var(--pagination-border);
         }
 
-        /* Flash Messages (still fixed, but top adjusted) */
+        /* --- Flash Messages --- */
         .flash-messages {
             position: fixed;
-            top: 20px; /* Adjusted top position as header is not fixed */
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1001; /* Keep high z-index for visibility */
+            z-index: 1001;
             width: auto;
             min-width: 280px;
             text-align: center;
@@ -225,32 +378,35 @@
             padding: 10px 18px;
             margin-bottom: 8px;
             border-radius: 6px;
-            color: var(--white);
+            color: #ffffff; /* Keep text white for all flash types */
             font-weight: 500;
             font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
-        .flash.success { background-color: var(--primary-blue); }
+        .flash.success { background-color: var(--primary-blue); } /* Use primary blue */
         .flash.error { background-color: var(--error-color); }
         .flash.warning { background-color: var(--warning-color); }
 
-        /* Site Footer (now static/relative) */
+        /* --- Site Footer --- */
         .site-footer-main {
-            background-color: var(--white);
-            color: var(--primary-blue);
+            background-color: var(--content-bg); /* Use variable */
+            color: var(--primary-blue); /* Changed to primary blue */
             text-align: center;
-            padding: 15px 0; /* Increased padding slightly for better spacing */
-            /* Removed position: fixed and related properties */
-            font-size: 0.85rem; /* Slightly increased font size */
+            padding: 15px 0;
+            font-size: 0.85rem;
             border-top: 1px solid var(--border-light);
-            margin-top: 30px; /* Added margin to separate from content */
-            position: relative; /* or static (default) */
+            margin-top: 30px;
+            position: relative;
+             transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
+        }
+        .site-footer-main p {
+             color: var(--text-light); /* Footer text color */
+             transition: color var(--toggle-transition-duration) ease;
         }
 
-        /* Mobile Optimizations */
+        /* --- Mobile Optimizations --- */
         @media (max-width: 768px) {
-            /* Removed body padding-top for mobile as header is static */
             body {
                 line-height: 1.6;
             }
@@ -261,6 +417,24 @@
             .site-header .logo-area h1 {
                 font-size: 1.3rem;
             }
+             .theme-toggle { /* Adjust toggle size for smaller screens */
+                 width: 60px;
+                 height: 30px;
+                 margin-left: 15px;
+             }
+             .theme-toggle::before {
+                 width: 26px;
+                 height: 26px;
+             }
+             body.dark-mode .theme-toggle::before {
+                 transform: translateX(30px);
+             }
+              .theme-toggle i {
+                  font-size: 12px;
+              }
+              .theme-toggle .sun { left: 8px; }
+              .theme-toggle .moon { right: 8px; }
+
             .part-content-wrapper {
                 padding: 20px;
             }
@@ -271,7 +445,7 @@
                 font-size: 0.95rem;
             }
             .flash-messages {
-                top: 10px; /* Adjusted for mobile */
+                top: 10px;
                 width: 90%;
             }
             .pagination a, .pagination span {
@@ -284,9 +458,30 @@
             .container {
                 width: 94%;
             }
+             .site-header .header-container {
+                 width: 94%;
+             }
             .site-header .logo-area h1 {
                 font-size: 1.2rem;
             }
+             .theme-toggle { /* Further adjust toggle */
+                 width: 54px;
+                 height: 28px;
+                 margin-left: 10px;
+             }
+              .theme-toggle::before {
+                  width: 24px;
+                  height: 24px;
+              }
+              body.dark-mode .theme-toggle::before {
+                  transform: translateX(26px);
+              }
+               .theme-toggle i {
+                   font-size: 11px;
+               }
+               .theme-toggle .sun { left: 7px; }
+               .theme-toggle .moon { right: 7px; }
+
             .part-title {
                 font-size: 1.5rem;
             }
@@ -297,10 +492,10 @@
                 font-size: 0.9rem;
             }
              .breadcrumb {
-                font-size: 0.85rem;
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
+                 font-size: 0.85rem;
+                 margin-top: 15px;
+                 margin-bottom: 15px;
+             }
             .pagination a, .pagination span {
                 padding: 6px 10px;
                 font-size: 0.8rem;
@@ -309,14 +504,23 @@
             .flash-messages {
                 top: 5px;
             }
+             .site-footer-main {
+                 padding: 12px 0;
+                 font-size: 0.8rem;
+             }
         }
     </style>
 </head>
-<body>
-    <header class="site-header">
+<body> <header class="site-header">
         <div class="header-container">
             <div class="logo-area">
                 <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+                    <i class="fas fa-sun sun"></i>
+                    <i class="fas fa-moon moon"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -385,5 +589,55 @@
     <footer class="site-footer-main">
         <p>&copy; {{ current_year_bn }} আমার বইঘর। সর্বস্বত্ব সংরক্ষিত।</p>
     </footer>
+
+    <script>
+        const toggleButton = document.querySelector('.theme-toggle');
+        const bodyElement = document.body;
+
+        // Function to apply theme based on preference
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        };
+
+        // Check for saved user preference in localStorage
+        let currentTheme = localStorage.getItem('theme');
+
+        // If no preference found, check system preference
+        if (!currentTheme) {
+            currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        // Apply the determined theme on initial load
+        applyTheme(currentTheme);
+
+        // Event listener for the toggle button
+        toggleButton.addEventListener('click', () => {
+            // Toggle the dark-mode class on the body
+            bodyElement.classList.toggle('dark-mode');
+
+            // Determine the new theme
+            const newTheme = bodyElement.classList.contains('dark-mode') ? 'dark' : 'light';
+
+            // Save the new theme preference to localStorage
+            localStorage.setItem('theme', newTheme);
+
+            // Optional: Add temporary class for extra visual feedback (can be removed if not needed)
+            // toggleButton.classList.add('animate');
+            // setTimeout(() => toggleButton.classList.remove('animate'), 600);
+        });
+
+        // Optional: Listen for changes in system preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            // Only change if no user preference is saved in localStorage
+            if (!localStorage.getItem('theme')) {
+                const newColorScheme = event.matches ? 'dark' : 'light';
+                applyTheme(newColorScheme);
+            }
+        });
+    </script>
 </body>
 </html>
