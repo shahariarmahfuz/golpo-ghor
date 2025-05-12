@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ current_page_title }} - আমার বইঘর অ্যাডমিন</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/smfkt8gm5uhjetk08mg7zrycy9i66148mq7y8w4mpkyv6y5j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        :root {
+            --admin-primary: #34495e; 
+            --admin-secondary: #7f8c8d; 
+            --admin-accent: #2980b9;
+            --admin-accent-hover: #3498db; /* Accent hover color */
+            --admin-bg: #ecf0f1; 
+            --admin-text: #2c3e50; 
+            --admin-card-bg: #ffffff;
+            --admin-border: #bdc3c7; 
+            --admin-input-focus-border: var(--admin-accent);
+            --admin-input-focus-shadow: rgba(41, 128, 185, 0.25);
+            --font-family: 'Hind Siliguri', sans-serif;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+
+            --danger-color: #e74c3c;
+            --danger-hover-color: #c0392b;
+            --warning-color: #f39c12;
+            --warning-hover-color: #e67e22;
+            --success-color: #2ecc71;
+            --success-hover-color: #27ae60;
+            --secondary-hover-color: #95a5a6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: var(--font-family); 
+            background-color: var(--admin-bg); 
+            color: var(--admin-text); 
+            line-height: 1.7; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            font-size: 16px;
+        }
+        /* Header Styles */
+        .admin-header { 
+            background-color: var(--admin-primary); 
+            color: var(--admin-bg); 
+            padding: 15px 0; 
+            box-shadow: var(--box-shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 1010; /* Ensure header is above other content */
+        }
+        .admin-header .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 95%; 
+            max-width: 1000px; 
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .admin-header h1 a { 
+            color: var(--admin-bg); 
+            text-decoration: none; 
+            font-size: 1.6rem; 
+            font-weight: 600; 
+        }
+        .admin-header nav {
+            display: flex;
+            align-items: center;
+        }
+        .admin-header nav a { 
+            color: var(--admin-bg); 
+            text-decoration: none; 
+            margin-left: 15px; 
+            font-size: 0.95rem; 
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+        .admin-header nav a:hover, .admin-header nav a.active { 
+            background-color: var(--admin-accent);
+            color: var(--admin-card-bg);
+        }
+
+        /* Main Container */
+        .container { 
+            width: 95%; 
+            max-width: 1000px; 
+            margin: 25px auto; 
+            flex-grow: 1; 
+            padding: 0 15px;
+        }
+
+        /* Page Title Section */
+        .page-title-section { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 15px;
+            padding-bottom: 12px; 
+            border-bottom: 2px solid var(--admin-accent); 
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+        .page-title-section h2 { 
+            font-size: 1.8rem; 
+            color: var(--admin-primary); 
+            font-weight: 600; 
+            line-height: 1.3;
+        }
+
+        /* Owner Context */
+        .owner-context {
+            font-size: 0.95rem; 
+            color: var(--admin-secondary); 
+            margin-bottom: 25px;
+            background-color: var(--admin-card-bg); 
+            padding: 12px 15px; 
+            border-radius: 5px; 
+            border-left: 4px solid var(--admin-accent);
+            box-shadow: var(--box-shadow);
+        }
+        .owner-context strong { color: var(--admin-primary); }
+        .owner-context a { color: var(--admin-accent); text-decoration: none; font-weight: 500; }
+        .owner-context a:hover { text-decoration: underline; color: var(--admin-accent-hover); }
+
+        /* Buttons */
+        .btn { 
+            padding: 10px 18px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; 
+            border: none; 
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: var(--box-shadow);
+        }
+        .btn:active { transform: translateY(-1px); }
+        .btn-primary { background-color: var(--admin-accent); color: white; }
+        .btn-primary:hover { background-color: var(--admin-accent-hover); }
+        .btn-secondary { background-color: var(--admin-secondary); color: white; }
+        .btn-secondary:hover { background-color: var(--secondary-hover-color); }
+
+        /* Form Card & Form Groups */
+        .form-card { 
+            background-color: var(--admin-card-bg); 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: var(--box-shadow-lg); 
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: var(--admin-text); 
+            font-size: 0.95rem;
+        }
+        .form-group input[type="number"] {
+            width: 100%; 
+            max-width: 200px; /* Default max-width for larger screens */
+            padding: 12px; 
+            border: 1px solid var(--admin-border); 
+            border-radius: 5px; 
+            font-family: var(--font-family); 
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--admin-input-focus-border);
+            box-shadow: 0 0 0 0.2rem var(--admin-input-focus-shadow);
+        }
+        .form-actions { 
+            margin-top: 25px; 
+            text-align: right;
+        }
+        .form-actions .btn { margin-left: 10px; }
+
+        /* TinyMCE specific styling */
+        .tox-tinymce {
+            border: 1px solid var(--admin-border) !important;
+            border-radius: 5px;
+        }
+        .tox .tox-edit-area__iframe {
+            background-color: var(--admin-card-bg) !important; /* Ensure iframe bg matches card */
+        }
+
+
+        /* Flash Messages */
+        .flash-messages { 
+            position: fixed; 
+            top: 85px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 1070; /* Ensure flash messages are above TinyMCE UI if it has high z-index */
+            width: auto; 
+            max-width: 90%;
+            min-width: 280px; 
+            text-align: center; 
+        }
+        .flash { 
+            padding: 10px 18px; 
+            margin-bottom: 10px; 
+            border-radius: 6px; 
+            color: #fff; 
+            font-weight: 500; 
+            font-size: 0.9rem;
+            box-shadow: var(--box-shadow-lg);
+        }
+        .flash.success { background-color: var(--success-color); }
+        .flash.error { background-color: var(--danger-color); }
+        .flash.warning { background-color: var(--warning-color); color: var(--admin-text); }
+
+        /* Footer */
+        .admin-footer { 
+            background-color: var(--admin-primary); 
+            color: var(--admin-bg); 
+            text-align: center; 
+            padding: 15px 0; 
+            font-size: 0.85rem; 
+            margin-top: auto; 
+            border-top: 1px solid var(--admin-secondary);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) { 
+            .admin-header h1 a { font-size: 1.5rem; }
+            .admin-header nav a { font-size: 0.9rem; margin-left: 10px; }
+            .page-title-section h2 { font-size: 1.6rem; }
+            .container { max-width: 90%; } /* Allow more fluid width */
+        }
+
+        @media (max-width: 768px) { 
+            .admin-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .admin-header nav {
+                margin-top: 10px;
+                width: 100%;
+            }
+            .admin-header nav a {
+                margin-left: 0;
+                margin-bottom: 5px;
+                display: block; 
+                text-align: center;
+                background-color: rgba(255,255,255,0.05);
+            }
+            .admin-header nav a:hover, .admin-header nav a.active {
+                 background-color: var(--admin-accent);
+            }
+
+            .page-title-section { text-align: center; }
+            .page-title-section h2 { width: 100%; margin-bottom: 10px; }
+            .page-title-section .btn { width: 100%; }
+            .owner-context { text-align: center; }
+
+            .form-card { padding: 20px; }
+            .form-group input[type="number"] { max-width: 100%; } /* Full width on mobile */
+            .form-actions { text-align: center; }
+            .form-actions .btn { width: 100%; margin-left: 0; margin-bottom: 10px;}
+            .form-actions .btn:last-child { margin-bottom: 0; }
+
+            .flash-messages { top: 10px; }
+        }
+
+        @media (max-width: 480px) { 
+            body { font-size: 15px; }
+            .admin-header h1 a { font-size: 1.3rem; }
+            .page-title-section h2 { font-size: 1.4rem; }
+            .btn { font-size: 0.85rem; padding: 9px 15px; }
+            .form-group label { font-size: 0.9rem; }
+            .form-group input[type="number"] { font-size: 0.95rem; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="container">
+            <h1><a href="{{ url_for('admin_dashboard') }}">অ্যাডমিন প্যানেল</a></h1>
+            <nav>
+                <a href="{{ url_for('admin_dashboard') }}">ড্যাশবোর্ড</a>
+                {% if owner_type == 'story' %}
+                    <a href="{{ url_for('edit_story', story_id=owner_id) }}" id="backToOwnerLink">গল্পে ফিরে যান</a>
+                {% elif owner_type == 'story_part' %}
+                    <a href="{{ url_for('manage_story_part', part_id=owner_id) }}" id="backToOwnerLink">অংশে ফিরে যান</a>
+                {% endif %}
+                <a href="{{ url_for('index') }}" target="_blank">সাইট দেখুন</a>
+            </nav>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="page-title-section">
+            <h2>{{ current_page_title }}</h2>
+            {% if owner_type == 'story' %}
+                <a href="{{ url_for('edit_story', story_id=owner_id) }}" class="btn btn-secondary">গল্পে ফিরে যান</a>
+            {% elif owner_type == 'story_part' %}
+                 <a href="{{ url_for('manage_story_part', part_id=owner_id) }}" class="btn btn-secondary">অংশে ফিরে যান</a>
+            {% endif %}
+        </div>
+
+        <div class="owner-context">
+            {% if owner_type == 'story' %}
+                পৃষ্ঠাটি <strong><a href="{{ url_for('edit_story', story_id=owner_id) }}">{{ owner.title }}</a></strong> গল্পের জন্য।
+            {% elif owner_type == 'story_part' %}
+                পৃষ্ঠাটি <strong><a href="{{ url_for('edit_story', story_id=owner.story_id) }}">{{ owner.story_title }}</a></strong> গল্পের <strong>"<a href="{{ url_for('manage_story_part', part_id=owner_id) }}">{{ owner.part_title }}</a>"</strong> অংশের জন্য।
+            {% endif %}
+        </div>
+
+        <div class="form-card">
+            <form method="POST" action="{{ form_action_url }}">
+                <div class="form-group">
+                    <label for="page_number">পৃষ্ঠা নম্বর</label>
+                    <input type="number" id="page_number" name="page_number" value="{{ page_data.page_number if page_data else next_page_number | default(1) }}" required min="1">
+                </div>
+                <div class="form-group">
+                    <label for="page_content_html">পৃষ্ঠার বিষয়বস্তু</label>
+                    <textarea id="page_content_html" name="page_content_html" class="tinymce-editor">
+                        {{ page_data.page_content_html | safe if page_data else '' }}
+                    </textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">{% if page_id %}পৃষ্ঠা আপডেট করুন{% else %}পৃষ্ঠা যোগ করুন{% endif %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="admin-footer">
+        <p>&copy; {{ current_year_bn }} আমার বইঘর অ্যাডমিন প্যানেল।</p>
+    </footer>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea.tinymce-editor',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
+            toolbar: 'undo redo | styles | bold italic underline strikethrough | ' +
+                     'alignleft aligncenter alignright alignjustify | ' +
+                     'bullist numlist outdent indent | link image media | code | ' +
+                     'fullscreen preview | forecolor backcolor | removeformat | help',
+            height: "60vh", // Viewport height based, good for responsiveness
+            menubar: 'file edit view insert format tools table help', // Kept for full features, TinyMCE handles mobile UI
+            content_style: "body { font-family: 'Hind Siliguri', sans-serif; font-size: 16px; line-height: 1.8; background-color: #fff; color: #000 }", // Added bg/color for iframe
+            font_family_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Hind Siliguri=Hind Siliguri,sans-serif; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
+            content_langs: [
+                { title: 'English', code: 'en' },
+                { title: 'Bengali', code: 'bn' }
+            ],
+            mobile: { // Settings specific to mobile devices
+                menubar: true, // Keeps menubar, often transformed into a hamburger menu
+                toolbar_mode: 'sliding', // Or 'scrolling' / 'wrap'
+                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount', // Keep plugins
+                 theme: 'silver' // Ensure modern theme
+            },
+            // language: 'bn', // বাংলা লোকালিজেশন ফাইল থাকলে এটি আনকমেন্ট করুন
+            // language_url: '{{ url_for("static", filename="tinymce_langs/bn.js") }}', // এবং এটিও
+            promotion: false // Hides "Upgrade to Premium" message from TinyMCE
+        });
+
+        // Auto-hide flash messages
+        setTimeout(function() {
+            let flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                flashMessages.style.opacity = '0';
+                flashMessages.style.transform = 'translateY(-20px)';
+                setTimeout(() => { 
+                    if(flashMessages) flashMessages.style.display = 'none'; 
+                }, 500);
+            }
+        }, 5000);
+
+        // Basic active link highlighting for nav
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = window.location.pathname;
+            const navLinks = document.querySelectorAll('.admin-header nav a');
+            let ownerLinkActive = false;
+
+            const backToOwnerLinkElement = document.getElementById('backToOwnerLink');
+            if (backToOwnerLinkElement) {
+                // If the current page is for managing content of an owner, highlight the "back to owner" link.
+                // This assumes the current page's URL will be distinct from the owner's edit page URL.
+                 if (currentLocation.includes('/manage-page/')) { // Or a more specific check for this page
+                    backToOwnerLinkElement.classList.add('active');
+                    ownerLinkActive = true;
+                 }
+            }
+
+            if (!ownerLinkActive) { // If not on a sub-page, try to match other links
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentLocation) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            } else { // If owner link is active, ensure other links are not
+                 navLinks.forEach(link => {
+                    if (link.id !== 'backToOwnerLink') { // Don't remove active from the owner link itself
+                        link.classList.remove('active');
+                    }
+                 });
+            }
+
+
+            // Fallback to dashboard if no link is active
+            const dashboardLink = "{{ url_for('admin_dashboard') }}";
+            if (!document.querySelector('.admin-header nav a.active') && currentLocation === dashboardLink) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === dashboardLink) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

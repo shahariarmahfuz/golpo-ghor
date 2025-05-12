@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} - আমার বইঘর অ্যাডমিন</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --admin-primary: #34495e; 
+            --admin-secondary: #7f8c8d; 
+            --admin-accent: #2980b9;
+            --admin-accent-hover: #3498db; /* Accent hover color */
+            --admin-bg: #ecf0f1; 
+            --admin-text: #2c3e50; 
+            --admin-card-bg: #ffffff;
+            --admin-border: #bdc3c7; 
+            --admin-input-focus-border: var(--admin-accent);
+            --admin-input-focus-shadow: rgba(41, 128, 185, 0.25);
+            --font-family: 'Hind Siliguri', sans-serif;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+
+            --danger-color: #e74c3c;
+            --danger-hover-color: #c0392b;
+            --warning-color: #f39c12;
+            --warning-hover-color: #e67e22;
+            --success-color: #2ecc71;
+            --success-hover-color: #27ae60;
+            --secondary-hover-color: #95a5a6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: var(--font-family); 
+            background-color: var(--admin-bg); 
+            color: var(--admin-text); 
+            line-height: 1.7; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            font-size: 16px;
+        }
+        /* Header Styles (Consistent with Admin Dashboard) */
+        .admin-header { 
+            background-color: var(--admin-primary); 
+            color: var(--admin-bg); 
+            padding: 15px 0; 
+            box-shadow: var(--box-shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 1010;
+        }
+        .admin-header .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 95%; 
+            max-width: 1200px; 
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .admin-header h1 a { 
+            color: var(--admin-bg); 
+            text-decoration: none; 
+            font-size: 1.6rem; 
+            font-weight: 600; 
+        }
+        .admin-header nav {
+            display: flex;
+            align-items: center;
+        }
+        .admin-header nav a { 
+            color: var(--admin-bg); 
+            text-decoration: none; 
+            margin-left: 15px; 
+            font-size: 0.95rem; 
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+        .admin-header nav a:hover, .admin-header nav a.active { 
+            background-color: var(--admin-accent);
+            color: var(--admin-card-bg); /* White */
+        }
+
+        /* Main Container */
+        .container { 
+            width: 95%; 
+            max-width: 1200px; 
+            margin: 25px auto; 
+            flex-grow: 1; 
+            padding: 0 15px;
+        }
+
+        /* Page Title Section */
+        .page-title-section { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 25px; 
+            padding-bottom: 12px; 
+            border-bottom: 2px solid var(--admin-accent); 
+            flex-wrap: wrap; /* Allow wrapping */
+            gap: 15px; /* Gap between title and button */
+        }
+        .page-title-section h2 { 
+            font-size: 1.8rem; 
+            color: var(--admin-primary); 
+            font-weight: 600; 
+            line-height: 1.3;
+        }
+
+        /* Buttons */
+        .btn { 
+            padding: 10px 18px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; 
+            border: none; 
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: var(--box-shadow);
+        }
+         .btn:active {
+            transform: translateY(-1px);
+        }
+        .btn-primary { background-color: var(--admin-accent); color: white; }
+        .btn-primary:hover { background-color: var(--admin-accent-hover); }
+        .btn-secondary { background-color: var(--admin-secondary); color: white; }
+        .btn-secondary:hover { background-color: var(--secondary-hover-color); }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: var(--success-hover-color); }
+        .btn-warning { background-color: var(--warning-color); color: white; }
+        .btn-warning:hover { background-color: var(--warning-hover-color); }
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-danger:hover { background-color: var(--danger-hover-color); }
+        .btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+
+        /* Form Card & Content Management Card */
+        .form-card, .content-management-card { 
+            background-color: var(--admin-card-bg); 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: var(--box-shadow-lg); 
+            margin-bottom: 30px; 
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: var(--admin-text); 
+            font-size: 0.95rem;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="number"], 
+        .form-group textarea {
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--admin-border); 
+            border-radius: 5px;
+            font-family: var(--font-family); 
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--admin-input-focus-border);
+            box-shadow: 0 0 0 0.2rem var(--admin-input-focus-shadow);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-group input[type="checkbox"] { 
+            margin-right: 8px; 
+            vertical-align: middle; 
+            width: auto; /* Override full width */
+            height: 1em; /* Align with text */
+            accent-color: var(--admin-accent);
+        }
+        .form-group .checkbox-label { /* For inline label with checkbox */
+            display: inline;
+            font-weight: normal;
+            font-size: 1rem;
+        }
+        .form-group .warning-text {
+            color: var(--warning-color);
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: block;
+        }
+        .form-actions { margin-top: 25px; }
+
+        /* Content Management Section */
+        .section-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px; /* Replaces margin on .section-title */
+        }
+        .section-title { 
+            font-size: 1.4rem; /* Adjusted */
+            color: var(--admin-primary); 
+            font-weight: 600;
+            /* Removed margin-top, margin-bottom, padding-bottom, border-bottom; handled by .section-title-bar or card */
+        }
+        .content-management-card .section-title { /* If title is directly in card */
+             padding-bottom: 10px; 
+             border-bottom: 1px solid var(--admin-border);
+             margin-bottom: 20px;
+        }
+
+        .item-list { list-style: none; padding: 0; }
+        .item-list li {
+            background-color: #f9fafb; 
+            padding: 15px; 
+            border-radius: 6px; 
+            margin-bottom: 12px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; /* Align items to top for multiline content */
+            border: 1px solid var(--admin-border);
+            border-left: 4px solid var(--admin-secondary);
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            gap: 10px;
+        }
+        .item-list li .item-info {
+            flex-grow: 1; /* Allow info to take available space */
+        }
+        .item-list li .item-info .item-title { 
+            font-weight: 600; 
+            color: var(--admin-primary);
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .item-list li .item-info .item-meta {
+            font-size: 0.85rem;
+            color: var(--admin-secondary);
+            display: block;
+            margin-bottom: 4px;
+        }
+         .item-list li .item-info .item-summary {
+            font-size: 0.9rem;
+            color: var(--admin-text);
+        }
+        .item-list li .item-actions { 
+            display: flex;
+            gap: 8px; /* Gap between action buttons */
+            align-items: center; /* Align buttons vertically */
+            flex-shrink: 0; /* Prevent actions from shrinking too much */
+            flex-wrap: wrap; /* Allow buttons to wrap */
+        }
+        .item-list li .item-actions form { display: inline-block; }
+
+        /* Modal Styles */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1050; /* Higher than sticky header */
+            left: 0; top: 0; 
+            width: 100%; height: 100%;
+            overflow-y: auto; /* Allow modal to scroll if content is too long */
+            background-color: rgba(0,0,0,0.6);
+            padding-top: 5vh; /* Space from top */
+            padding-bottom: 5vh;
+        }
+        .modal-content { 
+            background-color: var(--admin-card-bg); 
+            margin: 0 auto; /* Centered horizontally */
+            padding: 25px; 
+            border-radius: 8px; 
+            width: 90%; 
+            max-width: 550px; /* Max width for modal */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+            position: relative;
+            animation: fadeInModal 0.3s ease-out;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header { 
+            padding-bottom: 15px; 
+            border-bottom: 1px solid var(--admin-border); 
+            margin-bottom: 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+            color: var(--admin-primary); 
+            font-weight: 600;
+        }
+        .close-btn { 
+            color: var(--admin-secondary); 
+            font-size: 2rem; /* Larger close button */
+            font-weight: bold; 
+            cursor: pointer; 
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+        .close-btn:hover, .close-btn:focus { color: var(--admin-text); text-decoration: none; }
+        .modal .form-actions {
+            display: flex;
+            justify-content: flex-end; /* Align buttons to the right */
+            gap: 10px;
+        }
+
+
+        /* Flash Messages (Consistent with Admin Dashboard) */
+        .flash-messages { 
+            position: fixed; 
+            top: 85px; /* Adjusted for sticky header */
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 1060; /* Highest z-index */
+            width: auto; 
+            max-width: 90%;
+            min-width: 280px; 
+            text-align: center; 
+        }
+        .flash { 
+            padding: 10px 18px; 
+            margin-bottom: 10px; 
+            border-radius: 6px; 
+            color: #fff; 
+            font-weight: 500; 
+            font-size: 0.9rem;
+            box-shadow: var(--box-shadow-lg);
+        }
+        .flash.success { background-color: var(--success-color); }
+        .flash.error { background-color: var(--danger-color); }
+        .flash.warning { background-color: var(--warning-color); color: var(--admin-text); }
+
+        /* Footer (Consistent with Admin Dashboard) */
+        .admin-footer { 
+            background-color: var(--admin-primary); 
+            color: var(--admin-bg); 
+            text-align: center; 
+            padding: 15px 0; 
+            font-size: 0.85rem; 
+            margin-top: auto; 
+            border-top: 1px solid var(--admin-secondary);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) { /* Medium devices (tablets) */
+            .admin-header h1 a { font-size: 1.5rem; }
+            .admin-header nav a { font-size: 0.9rem; margin-left: 10px; }
+            .page-title-section h2 { font-size: 1.6rem; }
+        }
+
+        @media (max-width: 768px) { /* Small devices (tablets, large phones) */
+            .admin-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .admin-header nav {
+                margin-top: 10px;
+                width: 100%;
+            }
+            .admin-header nav a {
+                margin-left: 0;
+                margin-bottom: 5px;
+                display: block; /* Stack nav links */
+                text-align: center;
+                background-color: rgba(255,255,255,0.05); /* Slight bg for better visibility */
+            }
+            .admin-header nav a:hover, .admin-header nav a.active {
+                 background-color: var(--admin-accent);
+            }
+
+            .page-title-section { text-align: center; }
+            .page-title-section h2 { width: 100%; margin-bottom: 10px; }
+            .page-title-section .btn { width: 100%; }
+
+            .form-card, .content-management-card { padding: 20px; }
+            .section-title { font-size: 1.3rem; }
+            .item-list li { flex-direction: column; align-items: stretch; }
+            .item-list li .item-info { margin-bottom: 10px; }
+            .item-list li .item-actions { justify-content: flex-start; } /* Align buttons to start */
+            .item-list li .item-actions .btn { flex-grow: 1; text-align: center; } /* Make buttons take more space */
+
+            .modal-content { width: 95%; padding: 20px; }
+            .modal-header h3 { font-size: 1.3rem; }
+            .flash-messages { top: 10px; } /* Adjust if header stacks and becomes very tall */
+        }
+
+        @media (max-width: 480px) { /* Extra small devices (phones) */
+            body { font-size: 15px; }
+            .admin-header h1 a { font-size: 1.3rem; }
+            .page-title-section h2 { font-size: 1.4rem; }
+            .btn { font-size: 0.85rem; padding: 9px 15px; }
+            .btn-sm { font-size: 0.75rem; padding: 6px 10px; }
+            .form-group label { font-size: 0.9rem; }
+            .form-group input[type="text"], 
+            .form-group input[type="number"], 
+            .form-group textarea { font-size: 0.95rem; padding: 10px; }
+
+            .section-title { font-size: 1.2rem; }
+            .item-list li .item-info .item-title { font-size: 1rem; }
+            .modal-header h3 { font-size: 1.2rem; }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="container">
+            <h1><a href="{{ url_for('admin_dashboard') }}">অ্যাডমিন প্যানেল</a></h1>
+            <nav>
+                <a href="{{ url_for('admin_dashboard') }}">ড্যাশবোর্ড</a>
+                <a href="{{ url_for('add_story') }}" class="active">নতুন গল্প/নোট</a> {# Assuming this page is add_story or edit_story #}
+                <a href="{{ url_for('index') }}" target="_blank">সাইট দেখুন</a>
+            </nav>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="page-title-section">
+            <h2>{{ page_title }}</h2>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">ড্যাশবোর্ডে ফিরে যান</a>
+        </div>
+
+        <div class="form-card">
+            <form method="POST" action="{{ action_url }}">
+                <div class="form-group">
+                    <label for="title">শিরোনাম</label>
+                    <input type="text" id="title" name="title" value="{{ story.title if story else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="summary">সারাংশ (ঐচ্ছিক)</label>
+                    <textarea id="summary" name="summary">{{ story.summary if story else '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="has_parts" name="has_parts" {% if story and story.has_parts %}checked{% endif %}>
+                    <label for="has_parts" class="checkbox-label">এটি কি বহু-অংশের গল্প/নোট?</label>
+                    {% if story and story.has_parts != request.form.get('has_parts', story.has_parts) %}
+                        <span class="warning-text">গল্পের ধরন পরিবর্তন করতে হলে, প্রথমে সকল পৃষ্ঠা/অংশ ডিলিট করুন।</span>
+                    {% endif %}
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">{% if story %}আপডেট করুন{% else %}তৈরি করুন{% endif %}</button>
+                </div>
+            </form>
+        </div>
+
+        {% if story %}
+            <div class="content-management-card">
+                {% if story.has_parts %}
+                    {# বহু-অংশের গল্পের অংশ ব্যবস্থাপনা #}
+                    <div class="section-title-bar">
+                        <h3 class="section-title">গল্পের অংশসমূহ</h3>
+                        <button type="button" class="btn btn-success btn-sm" onclick="openAddPartModal()">নতুন অংশ যোগ করুন</button>
+                    </div>
+
+                    {% if story_parts_with_pages and story_parts_with_pages | length > 0 %}
+                        <ul class="item-list">
+                            {% for part in story_parts_with_pages | sort(attribute='part_order') %}
+                            <li>
+                                <div class="item-info">
+                                    <span class="item-title">{{ part.part_order | to_bengali_numerals }}. {{ part.part_title }}</span>
+                                    <span class="item-meta"> ({{ part.pages | length | to_bengali_numerals }} টি পৃষ্ঠা)</span>
+                                    <p class="item-summary">{{ part.summary[:100] if part.summary else 'সারাংশ নেই' }}{% if part.summary and part.summary|length > 100 %}...{% endif %}</p>
+                                </div>
+                                <div class="item-actions">
+                                    <a href="{{ url_for('manage_story_part', part_id=part.id) }}" class="btn btn-primary btn-sm">অংশ ও পৃষ্ঠা পরিচালনা</a>
+                                    <form action="{{ url_for('delete_part', part_id=part.id) }}" method="POST" onsubmit="return confirm('আপনি কি এই অংশ এবং এর সকল পৃষ্ঠা ডিলিট করতে চান?');">
+                                        <button type="submit" class="btn btn-danger btn-sm">ডিলিট</button>
+                                    </form>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p style="text-align:center; padding:10px 0; color: var(--admin-secondary);">এখনো কোনো অংশ যোগ করা হয়নি।</p>
+                    {% endif %}
+
+                {% else %}
+                    {# একক গল্পের পৃষ্ঠা ব্যবস্থাপনা #}
+                    <div class="section-title-bar">
+                        <h3 class="section-title">গল্পের পৃষ্ঠাসমূহ</h3>
+                        <a href="{{ url_for('manage_content_page', owner_type='story', owner_id=story.id) }}" class="btn btn-success btn-sm">নতুন পৃষ্ঠা যোগ করুন</a>
+                    </div>
+                    {% if pages and pages | length > 0 %}
+                        <ul class="item-list">
+                            {% for page in pages | sort(attribute='page_number') %}
+                            <li>
+                                <div class="item-info">
+                                     <span class="item-title">পৃষ্ঠা নম্বর: {{ page.page_number | to_bengali_numerals }}</span>
+                                </div>
+                                <div class="item-actions">
+                                    <a href="{{ url_for('manage_content_page', owner_type='story', owner_id=story.id, page_id=page.id) }}" class="btn btn-warning btn-sm">সম্পাদনা</a>
+                                    <form action="{{ url_for('delete_content_page', page_id=page.id) }}" method="POST" onsubmit="return confirm('আপনি কি এই পৃষ্ঠাটি ডিলিট করতে চান?');">
+                                        <button type="submit" class="btn btn-danger btn-sm">ডিলিট</button>
+                                    </form>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                         <p style="text-align:center; padding:10px 0; color: var(--admin-secondary);">এখনো কোনো পৃষ্ঠা যোগ করা হয়নি।</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {# "নতুন অংশ যোগ করুন" Modal #}
+    {% if story and story.has_parts %}
+    <div id="addPartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>নতুন অংশ যোগ করুন</h3>
+                <span class="close-btn" onclick="closeAddPartModal()" title="বন্ধ করুন">&times;</span>
+            </div>
+            <form method="POST" action="{{ url_for('add_part', story_id=story.id) }}">
+                <div class="form-group">
+                    <label for="part_title_modal">অংশের শিরোনাম</label>
+                    <input type="text" id="part_title_modal" name="part_title" required>
+                </div>
+                <div class="form-group">
+                    <label for="part_summary_modal">সারাংশ (ঐচ্ছিক)</label>
+                    <textarea id="part_summary_modal" name="summary"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="part_order_modal">ক্রম (ছোট থেকে বড় অনুসারে সাজানো হবে)</label>
+                    <input type="number" id="part_order_modal" name="part_order" value="{{ next_part_order | default(0) }}" min="0">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">যোগ করুন</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddPartModal()"> বাতিল করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <footer class="admin-footer">
+        <p>&copy; {{ current_year_bn }} আমার বইঘর অ্যাডমিন প্যানেল।</p>
+    </footer>
+
+    <script>
+        function openAddPartModal() {
+            const modal = document.getElementById('addPartModal');
+            if(modal) modal.style.display = 'block';
+        }
+        function closeAddPartModal() {
+            const modal = document.getElementById('addPartModal');
+            if(modal) modal.style.display = 'none';
+        }
+
+        // Close modal if clicked outside of the modal content, or if Escape key is pressed
+        window.onclick = function(event) {
+            const modal = document.getElementById('addPartModal');
+            if (modal && event.target == modal) {
+                closeAddPartModal();
+            }
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeAddPartModal();
+            }
+        });
+
+        // Auto-hide flash messages
+        setTimeout(function() {
+            let flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                flashMessages.style.opacity = '0';
+                flashMessages.style.transform = 'translateY(-20px)';
+                setTimeout(() => { 
+                    if(flashMessages) flashMessages.style.display = 'none'; 
+                }, 500);
+            }
+        }, 5000);
+
+        // Basic active link highlighting for nav (example)
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = window.location.pathname;
+            const navLinks = document.querySelectorAll('.admin-header nav a');
+            let isMatched = false;
+            navLinks.forEach(link => {
+                // More robust matching for edit pages
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentLocation || (currentLocation.includes(linkHref) && linkHref !== "{{ url_for('admin_dashboard') }}")) {
+                     // Special condition for add_story to cover edit_story as well
+                    if ( (currentLocation.includes("{{ url_for('add_story') }}") || currentLocation.includes("/edit-story/")) && linkHref === "{{ url_for('add_story') }}") {
+                        link.classList.add('active');
+                        isMatched = true;
+                    } else if (linkHref === currentLocation) {
+                        link.classList.add('active');
+                        isMatched = true;
+                    } else {
+                        link.classList.remove('active');
+                    }
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            // Default to dashboard if no specific match and not on add/edit
+            if (!isMatched && !currentLocation.includes("/edit-story/") && !currentLocation.includes("{{ url_for('add_story') }}".substring(1))) { // substring to remove leading / if any
+                 navLinks.forEach(link => {
+                     if (link.getAttribute('href') === "{{ url_for('admin_dashboard') }}") {
+                         link.classList.add('active');
+                     }
+                 });
+            }
+        });
+    </script>
+</body>
+</html>
