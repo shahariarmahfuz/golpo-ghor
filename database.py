@@ -4,7 +4,7 @@ import psycopg2.extras # DictCursor এর জন্য
 import os
 
 # আপনার দেওয়া PostgreSQL URL
-DATABASE_URL = "postgresql://unknown_2fua_user:wLAgVdiKZhnwjsuNB1FQhmCjaygYOIwX@dpg-d0goo024d50c73824b1g-a.oregon-postgres.render.com/unknown_2fua"
+DATABASE_URL = "postgresql://golpokar_user:eRPrj5VkGUnYSmkD2abUo5DXZdKt1GBu@dpg-d0gs42juibrs73fu3gs0-a/golpokar"
 
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
