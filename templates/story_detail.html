@@ -5,20 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ story.title }} - আমার বইঘর</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-blue: #0077cc; /* Premium blue from first template */
-            --dark-blue: #005fa3;    /* Darker blue for hover states */
+            /* Light Theme Variables */
+            --primary-blue: #0077cc;
+            --dark-blue: #005fa3;
             --white: #ffffff;
-            --light-bg: #f8fafc;     /* Very light blue-white background */
+            --light-bg: #f8fafc;
             --text-dark: #1a1a1a;
             --text-light: #4d4d4d;
             --border-light: #e0e6ed;
+            --content-bg: #ffffff; /* For header, footer, content wrapper */
+            --list-item-bg: var(--light-bg); /* For part list items */
+            --list-item-hover-bg: #eaf5fc;
             --font-family: 'Hind Siliguri', sans-serif;
             --box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
             --box-shadow-hover: 0 6px 16px rgba(0, 60, 120, 0.12);
-            --error-color: #cc3300;     /* For flash error messages */
-            --warning-color: #cc9900;   /* For flash warning messages */
+            --error-color: #cc3300;
+            --warning-color: #cc9900;
+
+            --pagination-bg: var(--white);
+            --pagination-text: var(--primary-blue);
+            --pagination-border: var(--primary-blue);
+            --pagination-hover-bg: var(--primary-blue);
+            --pagination-hover-text: var(--white);
+            --pagination-current-bg: var(--primary-blue);
+            --pagination-current-text: var(--white);
+            --pagination-disabled-bg: #f0f0f0;
+            --pagination-disabled-text: #aaa;
+            --pagination-disabled-border: var(--border-light);
+
+            /* Theme Toggle Specific Variables */
+            --toggle-transition-duration: 0.6s;
+            --toggle-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Dark Theme Variable Overrides */
+        body.dark-mode {
+            --primary-blue: #2196f3;
+            --dark-blue: #1976d2;
+            --white: #1e1e1e; /* Effectively the dark bg for elements using var(--white) */
+            --light-bg: #121212; /* Main page background */
+            --text-dark: #e0e0e0;
+            --text-light: #b0b0b0;
+            --border-light: #3a3a3a;
+            --content-bg: #1e1e1e; /* Dark bg for header, footer, content card */
+            --list-item-bg: #272727; /* Darker bg for part list items */
+            --list-item-hover-bg: #333333;
+            --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.5);
+
+            --pagination-bg: var(--content-bg); /* Dark content bg */
+            --pagination-text: var(--primary-blue);
+            --pagination-border: var(--primary-blue);
+            --pagination-hover-bg: var(--primary-blue);
+            --pagination-hover-text: #ffffff; /* Ensuring white text */
+            --pagination-current-bg: var(--primary-blue);
+            --pagination-current-text: #ffffff;
+            --pagination-disabled-bg: #3a3a3a;
+            --pagination-disabled-text: #757575;
+            --pagination-disabled-border: #4a4a4a;
         }
 
         * {
@@ -29,63 +76,161 @@
 
         body {
             font-family: var(--font-family);
-            background-color: var(--light-bg); /* Using light-bg for body */
+            background-color: var(--light-bg);
             color: var(--text-dark);
-            line-height: 1.7; /* Adjusted for readability */
-            padding-top: 80px; /* Space for fixed header (approx height: 50-60px + margin) */
-            padding-bottom: 70px; /* Space for fixed footer (approx height: 40-50px + margin) */
+            line-height: 1.7;
+            padding-top: 80px; /* Space for fixed header */
+            padding-bottom: 70px; /* Space for fixed footer */
+            transition: background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
         }
 
         .container {
             width: 90%;
-            max-width: 900px; /* Optimal width for reading story content */
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px 0;
         }
 
-        /* Premium Header (Adapted from first template) */
+        /* --- Site Header --- */
         .site-header {
-            background-color: var(--white); /* Changed from dark to white */
+            background-color: var(--content-bg); /* Use variable */
             padding: 12px 0;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
+            box-shadow: var(--box-shadow); /* Use variable */
             border-bottom: 1px solid var(--border-light);
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
         }
 
-        .site-header .header-container { /* To align logo like first template */
+        .site-header .header-container {
             width: 92%;
-            max-width: 1200px; /* Matches first template's container for consistency */
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
+            justify-content: space-between; /* This will push toggle to the right */
             align-items: center;
         }
 
         .site-header .logo-area h1 {
             margin: 0;
-            font-size: 1.5rem; /* Matches first template's logo */
+            font-size: 1.5rem;
         }
 
         .site-header .logo-area h1 a {
-            color: var(--primary-blue); /* Changed from white to primary blue */
+            color: var(--primary-blue);
             text-decoration: none;
             font-weight: 700;
             letter-spacing: -0.5px;
+            transition: color var(--toggle-transition-duration) ease;
         }
+
+        .header-controls { /* Wrapper for toggle or other future controls */
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- Theme Toggle Button Styles (Copied and adapted) --- */
+        .theme-toggle {
+            position: relative;
+            width: 70px;
+            height: 34px;
+            border-radius: 50px;
+            background: linear-gradient(145deg, #6c5ce7, #5649b8);
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25);
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            /* margin-left: auto; Push to right if header-container is not space-between */
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ffd700; /* Sun */
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 2;
+        }
+
+        .theme-toggle i {
+            position: absolute;
+            font-size: 14px;
+            color: #fff;
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 3;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .theme-toggle .sun {
+            left: 9px;
+            opacity: 0;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .theme-toggle .moon {
+            right: 9px;
+            opacity: 1;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        body.dark-mode .theme-toggle {
+            background: linear-gradient(145deg, #2d3436, #1a1a1a);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        body.dark-mode .theme-toggle::before {
+            transform: translateX(36px);
+            background-color: #f5f6fa; /* Moon */
+        }
+
+        body.dark-mode .theme-toggle .sun {
+            opacity: 1;
+            transform: translateY(-50%) rotate(360deg);
+        }
+
+        body.dark-mode .theme-toggle .moon {
+            opacity: 0;
+            transform: translateY(-50%) rotate(-360deg);
+        }
+        .theme-toggle::after { /* Glow effect */
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50px;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        body:not(.dark-mode) .theme-toggle:hover::after { opacity: 0.3; }
+        body.dark-mode .theme-toggle:hover::after {
+             background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+             opacity: 0.4;
+        }
+        /* --- End Theme Toggle Styles --- */
 
         .breadcrumb {
             margin-bottom: 20px;
             font-size: 0.9rem;
             color: var(--text-light);
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .breadcrumb a {
             color: var(--primary-blue);
             text-decoration: none;
             font-weight: 500;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .breadcrumb a:hover {
@@ -94,53 +239,62 @@
         }
 
         .breadcrumb span {
-            color: var(--text-dark); /* Current page in breadcrumb */
+            color: var(--text-dark);
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .story-content-wrapper {
-            background-color: var(--white); /* Content on white card */
-            padding: 25px 35px; /* Generous padding */
+            background-color: var(--content-bg); /* Use variable */
+            padding: 25px 35px;
             border-radius: 10px;
             box-shadow: var(--box-shadow);
             border: 1px solid var(--border-light);
             margin-bottom: 25px;
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
         }
 
         .story-title {
-            font-size: 2.2rem; /* Prominent story title */
+            font-size: 2.2rem;
             color: var(--primary-blue);
             margin-bottom: 10px;
-            font-weight: 600; /* Adjusted weight */
+            font-weight: 600;
             line-height: 1.3;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
-        .story-summary { /* Style for consistency if used */
+        .story-summary {
             font-size: 1rem;
             color: var(--text-light);
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-light);
             line-height: 1.6;
+            transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
 
         .story-meta {
             font-size: 0.85rem;
-            color: var(--primary-blue); /* Meta info in primary blue */
+            color: var(--text-light); /* Adjusted to text-light, primary-blue might be too strong */
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-light);
             opacity: 0.9;
+            transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
+        }
+        body.dark-mode .story-meta {
+             color: var(--text-light); /* Ensure it's not too bright */
         }
 
-        /* For multi-part stories */
+
         .parts-list h3 {
-            font-size: 1.5rem; /* Adjusted size */
+            font-size: 1.5rem;
             color: var(--primary-blue);
-            margin-top: 10px; 
+            margin-top: 10px;
             margin-bottom: 15px;
             padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary-blue); /* Accent border */
+            border-bottom: 2px solid var(--primary-blue);
             display: inline-block;
+            transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
 
         .parts-list ul {
@@ -150,44 +304,46 @@
 
         .parts-list li {
             margin-bottom: 12px;
-            background-color: var(--light-bg); /* Subtle background for items */
+            background-color: var(--list-item-bg); /* Use variable */
             padding: 12px 15px;
-            border-radius: 8px; /* Softer radius */
+            border-radius: 8px;
             border-left: 4px solid var(--primary-blue);
-            transition: background-color 0.3s ease, border-left-color 0.3s ease;
+            transition: background-color 0.3s ease, border-left-color 0.3s ease, border-color var(--toggle-transition-duration) ease;
         }
 
         .parts-list li:hover {
-            background-color: #eaf5fc; /* Light blue tint on hover */
+            background-color: var(--list-item-hover-bg); /* Use variable */
             border-left-color: var(--dark-blue);
         }
 
         .parts-list li a {
             text-decoration: none;
-            color: var(--primary-blue); /* Links in primary blue */
-            font-size: 1.1rem; /* Slightly larger part titles */
+            color: var(--primary-blue);
+            font-size: 1.1rem;
             font-weight: 500;
             display: block;
+            transition: color var(--toggle-transition-duration) ease;
         }
-         .parts-list li a:hover {
+        .parts-list li a:hover {
             color: var(--dark-blue);
         }
 
-        .parts-list li .part-summary { /* Summary within part list item */
+        .parts-list li .part-summary {
             font-size: 0.85rem;
-            color: var(--text-light); /* Lighter text for part summary */
+            color: var(--text-light);
             margin-top: 5px;
             line-height: 1.5;
-            border: none; /* Remove any inherited border */
-            padding: 0; /* Remove any inherited padding */
+            border: none;
+            padding: 0;
+            transition: color var(--toggle-transition-duration) ease;
         }
 
-        /* For single story with pages */
         .page-content {
-            margin-top: 10px; 
-            font-size: 1rem; 
-            line-height: 1.8; 
+            margin-top: 10px;
+            font-size: 1rem;
+            line-height: 1.8;
             color: var(--text-dark);
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         .page-content img {
@@ -196,22 +352,24 @@
             border-radius: 6px;
             margin: 20px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: filter var(--toggle-transition-duration) ease;
+        }
+        body.dark-mode .page-content img {
+             filter: brightness(0.9) contrast(1.05);
         }
 
-        .page-content p {
-            margin-bottom: 1.2em;
-        }
+        .page-content p { margin-bottom: 1.2em; }
         .page-content h1, .page-content h2, .page-content h3,
         .page-content h4, .page-content h5, .page-content h6 {
             color: var(--primary-blue);
             margin-top: 1.5em;
             margin-bottom: 0.8em;
             font-weight: 600;
+            transition: color var(--toggle-transition-duration) ease;
         }
         .page-content h1 { font-size: 1.8em; }
         .page-content h2 { font-size: 1.5em; }
         .page-content h3 { font-size: 1.3em; }
-
 
         .pagination {
             margin-top: 30px;
@@ -222,7 +380,7 @@
             display: inline-block;
             padding: 8px 15px;
             margin: 0 4px;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--pagination-border);
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
@@ -231,32 +389,31 @@
         }
 
         .pagination a {
-            background-color: var(--white);
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue); /* Border to match text */
+            background-color: var(--pagination-bg);
+            color: var(--pagination-text);
         }
 
         .pagination a:hover {
-            background-color: var(--primary-blue);
-            color: var(--white);
+            background-color: var(--pagination-hover-bg);
+            color: var(--pagination-hover-text);
+            border-color: var(--pagination-hover-bg); /* Sync border */
             transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 60, 120, 0.1);
+            box-shadow: var(--box-shadow);
         }
 
         .pagination .current-page {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border-color: var(--primary-blue);
+            background-color: var(--pagination-current-bg);
+            color: var(--pagination-current-text);
+            border-color: var(--pagination-current-bg);
         }
 
         .pagination .disabled {
-            color: #aaa;
+            color: var(--pagination-disabled-text);
             pointer-events: none;
-            background-color: #f0f0f0;
-            border-color: var(--border-light);
+            background-color: var(--pagination-disabled-bg);
+            border-color: var(--pagination-disabled-border);
         }
 
-        /* Flash Messages (Adapted from first template) */
         .flash-messages {
             position: fixed;
             top: 90px; /* Below fixed header */
@@ -272,20 +429,24 @@
             padding: 10px 18px;
             margin-bottom: 8px;
             border-radius: 6px;
-            color: var(--white);
+            color: var(--white); /* Text color will be white for all */
             font-weight: 500;
             font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
+        body:not(.dark-mode) .flash { color: #ffffff; } /* Ensure white text for light mode flash */
+        body.dark-mode .flash { color: #e0e0e0; } /* Light text for dark mode flash */
 
-        .flash.success { background-color: var(--primary-blue); } /* Using primary blue for success */
+
+        .flash.success { background-color: var(--primary-blue); }
         .flash.error { background-color: var(--error-color); }
         .flash.warning { background-color: var(--warning-color); }
 
-        /* Footer (Adapted from first template) */
+        body.dark-mode .flash.success { color: #ffffff; } /* Force white for success on dark */
+
+
         .site-footer-main {
-            background-color: var(--white); /* Changed from dark to white */
-            color: var(--primary-blue);    /* Changed from white to primary blue */
+            background-color: var(--content-bg); /* Use variable */
             text-align: center;
             padding: 12px 0;
             position: fixed;
@@ -295,75 +456,79 @@
             font-size: 0.8rem;
             border-top: 1px solid var(--border-light);
             z-index: 999;
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
+        }
+        .site-footer-main p {
+            color: var(--text-light); /* Footer text */
+            transition: color var(--toggle-transition-duration) ease;
         }
 
-        /* Mobile Optimizations (Inspired by first template) */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
             body {
-                padding-top: 70px; /* Adjusted for potentially smaller fixed header on mobile */
+                padding-top: 70px;
                 line-height: 1.6;
             }
             .container {
                 width: 92%;
                 padding: 15px 0;
             }
+            .site-header .header-container {
+                 /* width: 95%; if needed */
+            }
             .site-header .logo-area h1 {
-                font-size: 1.3rem; 
-            }
-            .story-content-wrapper {
-                padding: 20px 25px;
-            }
-            .story-title {
-                font-size: 1.8rem;
-            }
-            .parts-list h3 {
                 font-size: 1.3rem;
             }
-            .parts-list li a {
-                font-size: 1rem;
+            .theme-toggle { /* Adjust toggle size */
+                 width: 60px; height: 30px;
             }
-            .page-content {
-                font-size: 0.95rem;
-            }
-            .flash-messages {
-                top: 75px; 
-                width: 90%;
-            }
-            .pagination a, .pagination span {
-                padding: 7px 12px;
-                font-size: 0.85rem;
-            }
+            .theme-toggle::before { width: 26px; height: 26px; }
+            body.dark-mode .theme-toggle::before { transform: translateX(30px); }
+            .theme-toggle i { font-size: 12px; }
+            .theme-toggle .sun { left: 8px; } .theme-toggle .moon { right: 8px; }
+
+            .story-content-wrapper { padding: 20px 25px; }
+            .story-title { font-size: 1.8rem; }
+            .parts-list h3 { font-size: 1.3rem; }
+            .parts-list li a { font-size: 1rem; }
+            .page-content { font-size: 0.95rem; }
+            .flash-messages { top: 75px; width: 90%; }
+            .pagination a, .pagination span { padding: 7px 12px; font-size: 0.85rem; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                width: 94%;
+            body {
+                /* padding-top: 65px; if header is smaller */
             }
-            .site-header .logo-area h1 {
-                font-size: 1.2rem;
+            .container { width: 94%; }
+            .site-header .logo-area h1 { font-size: 1.2rem; }
+            .theme-toggle { /* Further adjust toggle */
+                 width: 54px; height: 28px;
             }
-            .story-title {
-                font-size: 1.6rem;
-            }
-            .parts-list h3 {
-                font-size: 1.2rem;
-            }
-            .page-content {
-                font-size: 0.9rem;
-            }
-             .breadcrumb {
-                font-size: 0.85rem;
-            }
-            .pagination a, .pagination span {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
+            .theme-toggle::before { width: 24px; height: 24px; }
+            body.dark-mode .theme-toggle::before { transform: translateX(26px); }
+            .theme-toggle i { font-size: 11px; }
+            .theme-toggle .sun { left: 7px; } .theme-toggle .moon { right: 7px; }
+
+            .story-title { font-size: 1.6rem; }
+            .parts-list h3 { font-size: 1.2rem; }
+            .page-content { font-size: 0.9rem; }
+            .breadcrumb { font-size: 0.85rem; }
+            .pagination a, .pagination span { padding: 6px 10px; font-size: 0.8rem; }
+             .site-footer-main { font-size: 0.75rem; padding: 10px 0; }
         }
     </style>
 </head>
-<body>
-    <header class="site-header">
-        <div class="header-container"> <div class="logo-area"> <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
+<body class=""> <header class="site-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+                    <i class="fas fa-sun sun"></i>
+                    <i class="fas fa-moon moon"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -385,10 +550,6 @@
 
         <div class="story-content-wrapper">
             <h1 class="story-title">{{ story.title }}</h1>
-            {# নিচের story.summary দেখানোর অংশটি বাদ দেওয়া হয়েছে #}
-            {# {% if story.summary %}
-                <p class="story-summary">{{ story.summary }}</p>
-            {% endif %} #}
             <p class="story-meta">প্রকাশিত: {{ story.created_at | format_bangla_datetime | attr('date_str') }}</p>
 
             {% if story.has_parts %}
@@ -451,5 +612,37 @@
     <footer class="site-footer-main">
         <p>&copy; {{ current_year_bn }} আমার বইঘর। সর্বস্বত্ব সংরক্ষিত।</p>
     </footer>
+
+    <script>
+        const toggleButton = document.querySelector('.theme-toggle');
+        const bodyElement = document.body;
+
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        };
+
+        let currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+            currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        applyTheme(currentTheme);
+
+        toggleButton.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark-mode');
+            const newTheme = bodyElement.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) { // Only change if no user preference is saved
+                const newColorScheme = event.matches ? 'dark' : 'light';
+                applyTheme(newColorScheme);
+            }
+        });
+    </script>
 </body>
 </html>
