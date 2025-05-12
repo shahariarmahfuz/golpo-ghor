@@ -5,35 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>আমার বইঘর - প্রধান পাতা</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-blue: #0077cc; /* Premium blue */
-            --dark-blue: #005fa3; /* Darker blue for hover states */
-            --white: #ffffff;
-            --light-bg: #f8fafc; /* Very light blue-white background */
+            /* Light Theme Variables */
+            --primary-blue: #0077cc;
+            --dark-blue: #005fa3;
+            --white: #ffffff; /* Used for body bg in light, and general white elements */
+            --light-bg: #f8fafc; /* Used for subtle backgrounds or main page bg if body is different */
+            --content-bg: #ffffff; /* Background for header, footer, cards */
+            --input-bg: #ffffff;
+            --input-text: var(--text-dark);
+            --input-border: var(--border-light);
+            --input-focus-border: var(--primary-blue);
+            --input-focus-shadow: rgba(0, 119, 204, 0.2);
             --text-dark: #1a1a1a;
             --text-light: #4d4d4d;
             --border-light: #e0e6ed;
             --font-family: 'Hind Siliguri', sans-serif;
             --box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
             --box-shadow-hover: 0 6px 16px rgba(0, 60, 120, 0.12);
+
+            /* Theme Toggle Specific Variables */
+            --toggle-transition-duration: 0.6s;
+            --toggle-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        
+
+        /* Dark Theme Variable Overrides */
+        body.dark-mode {
+            --primary-blue: #2196f3;
+            --dark-blue: #1976d2;
+            --white: #121212; /* Main page background in dark mode */
+            --light-bg: #1e1e1e; /* Subtle backgrounds in dark mode */
+            --content-bg: #1e1e1e; /* Dark bg for header, footer, cards */
+            --input-bg: #2b2b2b;
+            --input-text: #e0e0e0;
+            --input-border: #4a4a4a;
+            --input-focus-border: var(--primary-blue);
+            --input-focus-shadow: rgba(33, 150, 243, 0.3); /* Adjusted for dark primary blue */
+            --text-dark: #e0e0e0;
+            --text-light: #b0b0b0;
+            --border-light: #3a3a3a;
+            --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.5);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             font-family: var(--font-family);
-            background-color: var(--white);
+            background-color: var(--white); /* Light mode: white, Dark mode: #121212 */
             color: var(--text-dark);
             line-height: 1.6;
-            padding-top: 80px; /* Reduced header height */
+            padding-top: 80px;
             padding-bottom: 60px;
+            transition: background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
         }
-        
+
         .container {
             width: 92%;
             max-width: 1200px;
@@ -41,9 +73,9 @@
             padding: 15px 0;
         }
 
-        /* Premium Header */
+        /* --- Site Header --- */
         .site-header {
-            background-color: var(--white);
+            background-color: var(--content-bg); /* Use variable */
             color: var(--primary-blue);
             padding: 12px 0;
             position: fixed;
@@ -51,10 +83,11 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
+            box-shadow: var(--box-shadow); /* Use variable */
             border-bottom: 1px solid var(--border-light);
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
         }
-        
+
         .site-header .header-container {
             width: 92%;
             max-width: 1200px;
@@ -64,66 +97,119 @@
             align-items: center;
             gap: 15px;
         }
-        
+
         .site-header .logo-area h1 {
             margin: 0;
             white-space: nowrap;
             font-size: 1.5rem;
         }
-        
+
         .site-header .logo-area h1 a {
             color: var(--primary-blue);
             text-decoration: none;
             font-weight: 700;
             letter-spacing: -0.5px;
+            transition: color var(--toggle-transition-duration) ease;
         }
-        
+
         .site-header .search-area {
             flex-grow: 1;
             max-width: 500px;
         }
-        
+
         .header-search-form {
             display: flex;
             width: 100%;
         }
-        
+
         .header-search-form input[type="search"] {
             flex-grow: 1;
             padding: 10px 15px;
             font-family: var(--font-family);
             font-size: 0.9rem;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--input-border);
             border-radius: 8px 0 0 8px;
-            background-color: var(--white);
-            color: var(--text-dark);
+            background-color: var(--input-bg);
+            color: var(--input-text);
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
-        
+
         .header-search-form input[type="search"]:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 2px rgba(0, 119, 204, 0.2);
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 2px var(--input-focus-shadow);
         }
-        
+
         .header-search-form button[type="submit"] {
             padding: 10px 16px;
             font-family: var(--font-family);
             font-size: 0.9rem;
             background-color: var(--primary-blue);
-            color: var(--white);
+            color: var(--white); /* Text color of button (usually white) */
             border: none;
             border-radius: 0 8px 8px 0;
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-weight: 500;
         }
-        
+        body:not(.dark-mode) .header-search-form button[type="submit"] { color: #ffffff; }
+        body.dark-mode .header-search-form button[type="submit"] { color: #ffffff; }
+
+
         .header-search-form button[type="submit"]:hover {
             background-color: var(--dark-blue);
         }
 
-        /* Minimal Page Title */
+        .header-controls { /* For theme toggle */
+             display: flex;
+             align-items: center;
+        }
+
+        /* --- Theme Toggle Button Styles (Copied) --- */
+        .theme-toggle {
+            position: relative; width: 70px; height: 34px;
+            border-radius: 50px;
+            background: linear-gradient(145deg, #6c5ce7, #5649b8);
+            border: none; cursor: pointer; overflow: hidden;
+            box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25);
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+        }
+        .theme-toggle::before {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background-color: #ffd700; /* Sun */
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 2;
+        }
+        .theme-toggle i {
+            position: absolute; font-size: 14px; color: #fff;
+            transition: all var(--toggle-transition-duration) var(--toggle-easing);
+            z-index: 3; top: 50%; transform: translateY(-50%);
+        }
+        .theme-toggle .sun { left: 9px; opacity: 0; transform: translateY(-50%) rotate(0deg); }
+        .theme-toggle .moon { right: 9px; opacity: 1; transform: translateY(-50%) rotate(0deg); }
+
+        body.dark-mode .theme-toggle {
+            background: linear-gradient(145deg, #2d3436, #1a1a1a);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+        body.dark-mode .theme-toggle::before { transform: translateX(36px); background-color: #f5f6fa; /* Moon */ }
+        body.dark-mode .theme-toggle .sun { opacity: 1; transform: translateY(-50%) rotate(360deg); }
+        body.dark-mode .theme-toggle .moon { opacity: 0; transform: translateY(-50%) rotate(-360deg); }
+
+        .theme-toggle::after { /* Glow effect */
+            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50px;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 1;
+        }
+        body:not(.dark-mode) .theme-toggle:hover::after { opacity: 0.3; }
+        body.dark-mode .theme-toggle:hover::after {
+             background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+             opacity: 0.4;
+        }
+        /* --- End Theme Toggle Styles --- */
+
         .page-title {
             text-align: center;
             font-size: 1.5rem;
@@ -132,45 +218,50 @@
             font-weight: 600;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-light);
+            transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
 
-        /* Premium Story Cards */
         .story-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
-        
+
         .story-card {
-            background-color: var(--white);
+            background-color: var(--content-bg); /* Use variable */
             border-radius: 10px;
             box-shadow: var(--box-shadow);
             padding: 18px;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
             display: flex;
             flex-direction: column;
             border: 1px solid var(--border-light);
         }
-        
+
         .story-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--box-shadow-hover);
-            border-color: rgba(0, 119, 204, 0.2);
+            border-color: var(--input-focus-shadow); /* Using this variable for a subtle colored border on hover */
         }
-        
+        body.dark-mode .story-card:hover {
+            border-color: var(--input-focus-shadow);
+        }
+
+
         .story-card h2 {
             font-size: 1.3rem;
             color: var(--primary-blue);
             margin-bottom: 8px;
             font-weight: 600;
             line-height: 1.4;
+            transition: color var(--toggle-transition-duration) ease;
         }
-        
+
         .story-card h2 a {
             text-decoration: none;
             color: inherit;
         }
-        
+
         .story-card .summary {
             font-size: 0.9rem;
             color: var(--text-light);
@@ -183,21 +274,27 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             line-height: 1.5;
+            transition: color var(--toggle-transition-duration) ease;
         }
-        
+
         .story-card .meta-info {
             font-size: 0.8rem;
-            color: var(--primary-blue);
+            color: var(--text-light); /* Adjusted for less emphasis */
             margin-top: auto;
             opacity: 0.8;
+            transition: color var(--toggle-transition-duration) ease;
         }
-        
+         body.dark-mode .story-card .meta-info {
+             color: var(--text-light);
+         }
+
+
         .story-card .read-more-btn {
             display: inline-block;
             margin-top: 12px;
             padding: 7px 14px;
             background-color: var(--primary-blue);
-            color: var(--white);
+            color: var(--white); /* Button text color */
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
@@ -206,16 +303,18 @@
             font-size: 0.85rem;
             border: 1px solid transparent;
         }
-        
+        body:not(.dark-mode) .story-card .read-more-btn { color: #ffffff; }
+        body.dark-mode .story-card .read-more-btn { color: #ffffff; }
+
+
         .story-card .read-more-btn:hover {
             background-color: var(--dark-blue);
             transform: translateY(-1px);
         }
 
-        /* Subtle Flash Messages */
         .flash-messages {
             position: fixed;
-            top: 90px;
+            top: 90px; /* Initial value, may need adjustment based on mobile header */
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -223,25 +322,26 @@
             min-width: 280px;
             text-align: center;
         }
-        
+
         .flash {
             padding: 10px 18px;
             margin-bottom: 8px;
             border-radius: 6px;
-            color: var(--white);
             font-weight: 500;
             font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        
+        body:not(.dark-mode) .flash { color: #ffffff; }
+        body.dark-mode .flash { color: #e0e0e0; }
+
         .flash.success { background-color: var(--primary-blue); }
         .flash.error { background-color: #cc3300; }
         .flash.warning { background-color: #cc9900; }
+        body.dark-mode .flash.success { color: #ffffff; }
 
-        /* Minimal Footer */
+
         .site-footer-main {
-            background-color: var(--white);
-            color: var(--primary-blue);
+            background-color: var(--content-bg); /* Use variable */
             text-align: center;
             padding: 12px 0;
             position: fixed;
@@ -250,88 +350,79 @@
             width: 100%;
             font-size: 0.8rem;
             border-top: 1px solid var(--border-light);
+            transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
+        }
+        .site-footer-main p {
+            color: var(--text-light); /* Footer text */
+            transition: color var(--toggle-transition-duration) ease;
         }
 
         /* Mobile Optimizations */
         @media (max-width: 768px) {
-            body {
-                padding-top: 120px;
-            }
-            
+            body { padding-top: 130px; /* Increased due to stacked header */ }
+
             .site-header .header-container {
                 flex-direction: column;
                 gap: 12px;
+                align-items: stretch; /* Make items take full width */
             }
-            
-            .site-header .logo-area h1 {
-                font-size: 1.4rem;
+            .site-header .logo-area { text-align: center; }
+            .site-header .logo-area h1 { font-size: 1.4rem; }
+            .site-header .search-area { width: 100%; max-width: none; }
+            .header-controls { justify-content: center; margin-top: 5px;} /* Center toggle button */
+
+            .theme-toggle { /* Adjust toggle size */
+                 width: 60px; height: 30px;
             }
-            
-            .site-header .search-area {
-                width: 100%;
-                max-width: none;
-            }
-            
-            .page-title {
-                font-size: 1.3rem;
-                margin-bottom: 20px;
-            }
-            
-            .story-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            
-            .story-card {
-                padding: 16px;
-            }
-            
-            .flash-messages {
-                top: 120px;
-                width: 92%;
-            }
-            
-            .flash {
-                width: 100%;
-            }
+            .theme-toggle::before { width: 26px; height: 26px; }
+            body.dark-mode .theme-toggle::before { transform: translateX(30px); }
+            .theme-toggle i { font-size: 12px; }
+            .theme-toggle .sun { left: 8px; } .theme-toggle .moon { right: 8px; }
+
+            .page-title { font-size: 1.3rem; margin-bottom: 20px; }
+            .story-grid { grid-template-columns: 1fr; gap: 16px; }
+            .story-card { padding: 16px; }
+            .flash-messages { top: 135px; width: 92%; /* Adjusted for new body padding-top */ }
+            .flash { width: 100%; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                width: 94%;
+            body { padding-top: 125px; } /* Fine tune if needed */
+             .site-header .logo-area h1 { font-size: 1.3rem; }
+            .header-search-form input[type="search"] { padding: 8px 12px; font-size: 0.85rem; }
+            .header-search-form button[type="submit"] { padding: 8px 14px; font-size: 0.85rem; }
+
+            .theme-toggle { /* Further adjust toggle */
+                 width: 54px; height: 28px;
             }
-            
-            .header-search-form input[type="search"] {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-            
-            .header-search-form button[type="submit"] {
-                padding: 8px 14px;
-                font-size: 0.85rem;
-            }
-            
-            .story-card h2 {
-                font-size: 1.2rem;
-            }
-            
-            .story-card .summary {
-                font-size: 0.85rem;
-            }
+            .theme-toggle::before { width: 24px; height: 24px; }
+            body.dark-mode .theme-toggle::before { transform: translateX(26px); }
+            .theme-toggle i { font-size: 11px; }
+            .theme-toggle .sun { left: 7px; } .theme-toggle .moon { right: 7px; }
+
+
+            .story-card h2 { font-size: 1.2rem; }
+            .story-card .summary { font-size: 0.85rem; }
+            .flash-messages { top: 130px; }
         }
     </style>
 </head>
-<body>
-    <header class="site-header">
+<body class=""> <header class="site-header">
         <div class="header-container">
             <div class="logo-area">
                 <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
             </div>
             <div class="search-area">
                 <form method="GET" action="{{ url_for('search_results_page') }}" class="header-search-form">
-                    <input type="search" name="q" placeholder="গল্পের নাম বা সারাংশ দিয়ে খুঁজুন..." value="{{ search_query if search_query else '' }}" aria-label="গল্প খুঁজুন" required>
+                    <input type="search" name="q" placeholder="গল্পের নাম বা সারাংশ দিয়ে খুঁজুন..." value="{{ search_query if search_query else '' }}" aria-label="গল্প খুঁজুন" required>
                     <button type="submit">অনুসন্ধান</button>
                 </form>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+                    <i class="fas fa-sun sun"></i>
+                    <i class="fas fa-moon moon"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -359,17 +450,49 @@
                         <p class="meta-info">
                             প্রকাশিত: {{ story.created_at | format_bangla_date }}
                         </p>
-                        <a href="{{ url_for('story_detail', story_id=story.id) }}" class="read-more-btn">পড়ুন</a>
+                        <a href="{{ url_for('story_detail', story_id=story.id) }}" class="read-more-btn">পড়ুন</a>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p style="text-align: center; font-size: 1rem; color: var(--text-light); padding: 30px 0;">এখনো কোনো গল্প বা নোট যোগ করা হয়নি।</p>
+            <p style="text-align: center; font-size: 1rem; color: var(--text-light); padding: 30px 0;">এখনো কোনো গল্প বা নোট যোগ করা হয়নি।</p>
         {% endif %}
     </div>
 
     <footer class="site-footer-main">
         <p>&copy; {{ current_year_bn }} আমার বইঘর। সর্বস্বত্ব সংরক্ষিত।</p>
     </footer>
+
+    <script>
+        const toggleButton = document.querySelector('.theme-toggle');
+        const bodyElement = document.body;
+
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        };
+
+        let currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+            currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        applyTheme(currentTheme);
+
+        toggleButton.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark-mode');
+            const newTheme = bodyElement.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) { // Only change if no user preference is saved
+                const newColorScheme = event.matches ? 'dark' : 'light';
+                applyTheme(newColorScheme);
+            }
+        });
+    </script>
 </body>
 </html>
