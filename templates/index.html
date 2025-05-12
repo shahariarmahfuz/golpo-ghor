@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার বইঘর - প্রধান পাতা</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0077cc; /* Premium blue */
+            --dark-blue: #005fa3; /* Darker blue for hover states */
+            --white: #ffffff;
+            --light-bg: #f8fafc; /* Very light blue-white background */
+            --text-dark: #1a1a1a;
+            --text-light: #4d4d4d;
+            --border-light: #e0e6ed;
+            --font-family: 'Hind Siliguri', sans-serif;
+            --box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
+            --box-shadow-hover: 0 6px 16px rgba(0, 60, 120, 0.12);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-top: 80px; /* Reduced header height */
+            padding-bottom: 60px;
+        }
+        
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 0;
+        }
+
+        /* Premium Header */
+        .site-header {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .site-header .header-container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .site-header .logo-area h1 {
+            margin: 0;
+            white-space: nowrap;
+            font-size: 1.5rem;
+        }
+        
+        .site-header .logo-area h1 a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .site-header .search-area {
+            flex-grow: 1;
+            max-width: 500px;
+        }
+        
+        .header-search-form {
+            display: flex;
+            width: 100%;
+        }
+        
+        .header-search-form input[type="search"] {
+            flex-grow: 1;
+            padding: 10px 15px;
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            border: 1px solid var(--border-light);
+            border-radius: 8px 0 0 8px;
+            background-color: var(--white);
+            color: var(--text-dark);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .header-search-form input[type="search"]:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(0, 119, 204, 0.2);
+        }
+        
+        .header-search-form button[type="submit"] {
+            padding: 10px 16px;
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .header-search-form button[type="submit"]:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Minimal Page Title */
+        .page-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* Premium Story Cards */
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .story-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-light);
+        }
+        
+        .story-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-hover);
+            border-color: rgba(0, 119, 204, 0.2);
+        }
+        
+        .story-card h2 {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .story-card h2 a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .story-card .summary {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            flex-grow: 1;
+            max-height: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+        }
+        
+        .story-card .meta-info {
+            font-size: 0.8rem;
+            color: var(--primary-blue);
+            margin-top: auto;
+            opacity: 0.8;
+        }
+        
+        .story-card .read-more-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 14px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            font-size: 0.85rem;
+            border: 1px solid transparent;
+        }
+        
+        .story-card .read-more-btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-1px);
+        }
+
+        /* Subtle Flash Messages */
+        .flash-messages {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            width: auto;
+            min-width: 280px;
+            text-align: center;
+        }
+        
+        .flash {
+            padding: 10px 18px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .flash.success { background-color: var(--primary-blue); }
+        .flash.error { background-color: #cc3300; }
+        .flash.warning { background-color: #cc9900; }
+
+        /* Minimal Footer */
+        .site-footer-main {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            text-align: center;
+            padding: 12px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+            
+            .site-header .header-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .site-header .logo-area h1 {
+                font-size: 1.4rem;
+            }
+            
+            .site-header .search-area {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .story-card {
+                padding: 16px;
+            }
+            
+            .flash-messages {
+                top: 120px;
+                width: 92%;
+            }
+            
+            .flash {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 94%;
+            }
+            
+            .header-search-form input[type="search"] {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .header-search-form button[type="submit"] {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            
+            .story-card h2 {
+                font-size: 1.2rem;
+            }
+            
+            .story-card .summary {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
+            </div>
+            <div class="search-area">
+                <form method="GET" action="{{ url_for('search_results_page') }}" class="header-search-form">
+                    <input type="search" name="q" placeholder="গল্পের নাম বা সারাংশ দিয়ে খুঁজুন..." value="{{ search_query if search_query else '' }}" aria-label="গল্প খুঁজুন" required>
+                    <button type="submit">অনুসন্ধান</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <h1 class="page-title">গল্প ও নোটসমূহ</h1>
+        {% if stories %}
+            <div class="story-grid">
+                {% for story in stories %}
+                    <div class="story-card">
+                        <h2><a href="{{ url_for('story_detail', story_id=story.id) }}">{{ story.title }}</a></h2>
+                        {% if story.summary %}
+                            <p class="summary">{{ story.summary }}</p>
+                        {% endif %}
+                        <p class="meta-info">
+                            প্রকাশিত: {{ story.created_at | format_bangla_date }}
+                        </p>
+                        <a href="{{ url_for('story_detail', story_id=story.id) }}" class="read-more-btn">পড়ুন</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="text-align: center; font-size: 1rem; color: var(--text-light); padding: 30px 0;">এখনো কোনো গল্প বা নোট যোগ করা হয়নি।</p>
+        {% endif %}
+    </div>
+
+    <footer class="site-footer-main">
+        <p>&copy; {{ current_year_bn }} আমার বইঘর। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+</body>
+</html>

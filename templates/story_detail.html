@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ story.title }} - আমার বইঘর</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0077cc; /* Premium blue from first template */
+            --dark-blue: #005fa3;    /* Darker blue for hover states */
+            --white: #ffffff;
+            --light-bg: #f8fafc;     /* Very light blue-white background */
+            --text-dark: #1a1a1a;
+            --text-light: #4d4d4d;
+            --border-light: #e0e6ed;
+            --font-family: 'Hind Siliguri', sans-serif;
+            --box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
+            --box-shadow-hover: 0 6px 16px rgba(0, 60, 120, 0.12);
+            --error-color: #cc3300;     /* For flash error messages */
+            --warning-color: #cc9900;   /* For flash warning messages */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-bg); /* Using light-bg for body */
+            color: var(--text-dark);
+            line-height: 1.7; /* Adjusted for readability */
+            padding-top: 80px; /* Space for fixed header (approx height: 50-60px + margin) */
+            padding-bottom: 70px; /* Space for fixed footer (approx height: 40-50px + margin) */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px; /* Optimal width for reading story content */
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Premium Header (Adapted from first template) */
+        .site-header {
+            background-color: var(--white); /* Changed from dark to white */
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .site-header .header-container { /* To align logo like first template */
+            width: 92%;
+            max-width: 1200px; /* Matches first template's container for consistency */
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .site-header .logo-area h1 {
+            margin: 0;
+            font-size: 1.5rem; /* Matches first template's logo */
+        }
+
+        .site-header .logo-area h1 a {
+            color: var(--primary-blue); /* Changed from white to primary blue */
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+            color: var(--dark-blue);
+        }
+
+        .breadcrumb span {
+            color: var(--text-dark); /* Current page in breadcrumb */
+        }
+
+        .story-content-wrapper {
+            background-color: var(--white); /* Content on white card */
+            padding: 25px 35px; /* Generous padding */
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-light);
+            margin-bottom: 25px;
+        }
+
+        .story-title {
+            font-size: 2.2rem; /* Prominent story title */
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-weight: 600; /* Adjusted weight */
+            line-height: 1.3;
+        }
+
+        .story-summary { /* Style for consistency if used */
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+            line-height: 1.6;
+        }
+
+        .story-meta {
+            font-size: 0.85rem;
+            color: var(--primary-blue); /* Meta info in primary blue */
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+            opacity: 0.9;
+        }
+
+        /* For multi-part stories */
+        .parts-list h3 {
+            font-size: 1.5rem; /* Adjusted size */
+            color: var(--primary-blue);
+            margin-top: 10px; 
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-blue); /* Accent border */
+            display: inline-block;
+        }
+
+        .parts-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .parts-list li {
+            margin-bottom: 12px;
+            background-color: var(--light-bg); /* Subtle background for items */
+            padding: 12px 15px;
+            border-radius: 8px; /* Softer radius */
+            border-left: 4px solid var(--primary-blue);
+            transition: background-color 0.3s ease, border-left-color 0.3s ease;
+        }
+
+        .parts-list li:hover {
+            background-color: #eaf5fc; /* Light blue tint on hover */
+            border-left-color: var(--dark-blue);
+        }
+
+        .parts-list li a {
+            text-decoration: none;
+            color: var(--primary-blue); /* Links in primary blue */
+            font-size: 1.1rem; /* Slightly larger part titles */
+            font-weight: 500;
+            display: block;
+        }
+         .parts-list li a:hover {
+            color: var(--dark-blue);
+        }
+
+        .parts-list li .part-summary { /* Summary within part list item */
+            font-size: 0.85rem;
+            color: var(--text-light); /* Lighter text for part summary */
+            margin-top: 5px;
+            line-height: 1.5;
+            border: none; /* Remove any inherited border */
+            padding: 0; /* Remove any inherited padding */
+        }
+
+        /* For single story with pages */
+        .page-content {
+            margin-top: 10px; 
+            font-size: 1rem; 
+            line-height: 1.8; 
+            color: var(--text-dark);
+        }
+
+        .page-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .page-content p {
+            margin-bottom: 1.2em;
+        }
+        .page-content h1, .page-content h2, .page-content h3,
+        .page-content h4, .page-content h5, .page-content h6 {
+            color: var(--primary-blue);
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            font-weight: 600;
+        }
+        .page-content h1 { font-size: 1.8em; }
+        .page-content h2 { font-size: 1.5em; }
+        .page-content h3 { font-size: 1.3em; }
+
+
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 0 4px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue); /* Border to match text */
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 60, 120, 0.1);
+        }
+
+        .pagination .current-page {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+
+        .pagination .disabled {
+            color: #aaa;
+            pointer-events: none;
+            background-color: #f0f0f0;
+            border-color: var(--border-light);
+        }
+
+        /* Flash Messages (Adapted from first template) */
+        .flash-messages {
+            position: fixed;
+            top: 90px; /* Below fixed header */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            width: auto;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .flash {
+            padding: 10px 18px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .flash.success { background-color: var(--primary-blue); } /* Using primary blue for success */
+        .flash.error { background-color: var(--error-color); }
+        .flash.warning { background-color: var(--warning-color); }
+
+        /* Footer (Adapted from first template) */
+        .site-footer-main {
+            background-color: var(--white); /* Changed from dark to white */
+            color: var(--primary-blue);    /* Changed from white to primary blue */
+            text-align: center;
+            padding: 12px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-light);
+            z-index: 999;
+        }
+
+        /* Mobile Optimizations (Inspired by first template) */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px; /* Adjusted for potentially smaller fixed header on mobile */
+                line-height: 1.6;
+            }
+            .container {
+                width: 92%;
+                padding: 15px 0;
+            }
+            .site-header .logo-area h1 {
+                font-size: 1.3rem; 
+            }
+            .story-content-wrapper {
+                padding: 20px 25px;
+            }
+            .story-title {
+                font-size: 1.8rem;
+            }
+            .parts-list h3 {
+                font-size: 1.3rem;
+            }
+            .parts-list li a {
+                font-size: 1rem;
+            }
+            .page-content {
+                font-size: 0.95rem;
+            }
+            .flash-messages {
+                top: 75px; 
+                width: 90%;
+            }
+            .pagination a, .pagination span {
+                padding: 7px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 94%;
+            }
+            .site-header .logo-area h1 {
+                font-size: 1.2rem;
+            }
+            .story-title {
+                font-size: 1.6rem;
+            }
+            .parts-list h3 {
+                font-size: 1.2rem;
+            }
+            .page-content {
+                font-size: 0.9rem;
+            }
+             .breadcrumb {
+                font-size: 0.85rem;
+            }
+            .pagination a, .pagination span {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container"> <div class="logo-area"> <h1><a href="{{ url_for('index') }}">আমার বইঘর</a></h1>
+            </div>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">প্রথম পাতা</a> &raquo; <span>{{ story.title }}</span>
+        </div>
+
+        <div class="story-content-wrapper">
+            <h1 class="story-title">{{ story.title }}</h1>
+            {# নিচের story.summary দেখানোর অংশটি বাদ দেওয়া হয়েছে #}
+            {# {% if story.summary %}
+                <p class="story-summary">{{ story.summary }}</p>
+            {% endif %} #}
+            <p class="story-meta">প্রকাশিত: {{ story.created_at | format_bangla_datetime | attr('date_str') }}</p>
+
+            {% if story.has_parts %}
+                <div class="parts-list">
+                    <h3>গল্পের অংশসমূহ:</h3>
+                    {% if parts %}
+                        <ul>
+                            {% for part in parts %}
+                                <li>
+                                    <a href="{{ url_for('part_detail', story_id=story.id, part_id=part.id) }}">
+                                        {{ part.part_order | to_bengali_numerals }}. {{ part.part_title }}
+                                    </a>
+                                    {% if part.summary %}
+                                        <p class="part-summary">{{ part.summary }}</p>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p style="color: var(--text-light); font-size: 0.9rem;">এই গল্পের কোনো অংশ এখনো যোগ করা হয়নি।</p>
+                    {% endif %}
+                </div>
+            {% else %} {# Single story with pages #}
+                {% if content_page %}
+                    <div class="page-content">
+                        {{ content_page.page_content_html | safe }}
+                    </div>
+                    {% if total_pages > 1 %}
+                    <div class="pagination">
+                        {% if current_page_num > 1 %}
+                            <a href="{{ url_for('story_detail', story_id=story.id, page_num=current_page_num - 1) }}">পূর্ববর্তী পৃষ্ঠা</a>
+                        {% else %}
+                            <span class="disabled">পূর্ববর্তী পৃষ্ঠা</span>
+                        {% endif %}
+
+                        {% for page_iter_num in range(1, total_pages + 1) %}
+                            {% if page_iter_num == current_page_num %}
+                                <span class="current-page">{{ page_iter_num | to_bengali_numerals }}</span>
+                            {% else %}
+                                <a href="{{ url_for('story_detail', story_id=story.id, page_num=page_iter_num) }}">{{ page_iter_num | to_bengali_numerals }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if current_page_num < total_pages %}
+                            <a href="{{ url_for('story_detail', story_id=story.id, page_num=current_page_num + 1) }}">পরবর্তী পৃষ্ঠা</a>
+                        {% else %}
+                            <span class="disabled">পরবর্তী পৃষ্ঠা</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% elif total_pages == 0 and current_page_num == 0 %}
+                     <p style="color: var(--text-light); font-size: 0.9rem; text-align:center; padding: 20px 0;">এই গল্পের জন্য কোনো পৃষ্ঠা এখনো যোগ করা হয়নি।</p>
+                {% else %}
+                     <p style="color: var(--text-light); font-size: 0.9rem; text-align:center; padding: 20px 0;">অনুরোধকৃত পৃষ্ঠাটি পাওয়া যায়নি।</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <footer class="site-footer-main">
+        <p>&copy; {{ current_year_bn }} আমার বইঘর। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+</body>
+</html>
