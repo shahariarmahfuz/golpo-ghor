@@ -11,9 +11,9 @@
             /* Light Theme Variables */
             --primary-blue: #0077cc;
             --dark-blue: #005fa3;
-            --white: #ffffff; /* Used for body bg in light, and general white elements */
-            --light-bg: #f8fafc; /* Used for subtle backgrounds or main page bg if body is different */
-            --content-bg: #ffffff; /* Background for header, footer, cards */
+            --white: #ffffff;
+            --light-bg: #f8fafc;
+            --content-bg: #ffffff;
             --input-bg: #ffffff;
             --input-text: var(--text-dark);
             --input-border: var(--border-light);
@@ -36,13 +36,13 @@
             --primary-blue: #2196f3;
             --dark-blue: #1976d2;
             --white: #121212; /* Main page background in dark mode */
-            --light-bg: #1e1e1e; /* Subtle backgrounds in dark mode */
-            --content-bg: #1e1e1e; /* Dark bg for header, footer, cards */
+            --light-bg: #1e1e1e;
+            --content-bg: #1e1e1e;
             --input-bg: #2b2b2b;
             --input-text: #e0e0e0;
             --input-border: #4a4a4a;
             --input-focus-border: var(--primary-blue);
-            --input-focus-shadow: rgba(33, 150, 243, 0.3); /* Adjusted for dark primary blue */
+            --input-focus-shadow: rgba(33, 150, 243, 0.3);
             --text-dark: #e0e0e0;
             --text-light: #b0b0b0;
             --border-light: #3a3a3a;
@@ -58,10 +58,10 @@
 
         body {
             font-family: var(--font-family);
-            background-color: var(--white); /* Light mode: white, Dark mode: #121212 */
+            background-color: var(--white);
             color: var(--text-dark);
             line-height: 1.6;
-            padding-top: 80px;
+            padding-top: 80px; /* Reverted to original padding for desktop */
             padding-bottom: 60px;
             transition: background-color var(--toggle-transition-duration) ease, color var(--toggle-transition-duration) ease;
         }
@@ -70,20 +70,20 @@
             width: 92%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 0;
+            padding: 20px 0;
         }
 
         /* --- Site Header --- */
         .site-header {
-            background-color: var(--content-bg); /* Use variable */
+            background-color: var(--content-bg);
             color: var(--primary-blue);
-            padding: 12px 0;
+            padding: 12px 0; /* Reverted to original padding */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: var(--box-shadow); /* Use variable */
+            box-shadow: var(--box-shadow);
             border-bottom: 1px solid var(--border-light);
             transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease, box-shadow var(--toggle-transition-duration) ease;
         }
@@ -101,7 +101,7 @@
         .site-header .logo-area h1 {
             margin: 0;
             white-space: nowrap;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Reverted to original size */
         }
 
         .site-header .logo-area h1 a {
@@ -114,7 +114,7 @@
 
         .site-header .search-area {
             flex-grow: 1;
-            max-width: 500px;
+            max-width: 500px; /* Reverted to original max-width */
         }
 
         .header-search-form {
@@ -124,11 +124,11 @@
 
         .header-search-form input[type="search"] {
             flex-grow: 1;
-            padding: 10px 15px;
+            padding: 10px 15px; /* Reverted to original padding */
             font-family: var(--font-family);
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Reverted to original font size */
             border: 1px solid var(--input-border);
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px 0 0 8px; /* Reverted to original radius */
             background-color: var(--input-bg);
             color: var(--input-text);
             outline: none;
@@ -141,64 +141,63 @@
         }
 
         .header-search-form button[type="submit"] {
-            padding: 10px 16px;
+            padding: 10px 16px; /* Reverted to original padding */
             font-family: var(--font-family);
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Reverted to original font size */
             background-color: var(--primary-blue);
-            color: var(--white); /* Text color of button (usually white) */
+            color: #ffffff; /* Ensure white text */
             border: none;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 8px 8px 0; /* Reverted to original radius */
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-weight: 500;
         }
-        body:not(.dark-mode) .header-search-form button[type="submit"] { color: #ffffff; }
-        body.dark-mode .header-search-form button[type="submit"] { color: #ffffff; }
-
 
         .header-search-form button[type="submit"]:hover {
             background-color: var(--dark-blue);
         }
-
-        .header-controls { /* For theme toggle */
+        
+        .header-controls {
              display: flex;
              align-items: center;
         }
 
-        /* --- Theme Toggle Button Styles (Copied) --- */
+        /* --- Theme Toggle Button Styles (Reverted to original size) --- */
         .theme-toggle {
-            position: relative; width: 70px; height: 34px;
+            position: relative; width: 70px; height: 34px; /* Original size */
             border-radius: 50px;
             background: linear-gradient(145deg, #6c5ce7, #5649b8);
             border: none; cursor: pointer; overflow: hidden;
-            box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25);
+            box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25); /* Original shadow */
             transition: all var(--toggle-transition-duration) var(--toggle-easing);
         }
         .theme-toggle::before {
             content: ''; position: absolute; top: 2px; left: 2px;
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 30px; height: 30px; /* Original size */
+            border-radius: 50%;
             background-color: #ffd700; /* Sun */
             transition: all var(--toggle-transition-duration) var(--toggle-easing);
             z-index: 2;
         }
         .theme-toggle i {
-            position: absolute; font-size: 14px; color: #fff;
+            position: absolute; font-size: 14px; /* Original icon size */
+            color: #fff;
             transition: all var(--toggle-transition-duration) var(--toggle-easing);
             z-index: 3; top: 50%; transform: translateY(-50%);
         }
-        .theme-toggle .sun { left: 9px; opacity: 0; transform: translateY(-50%) rotate(0deg); }
-        .theme-toggle .moon { right: 9px; opacity: 1; transform: translateY(-50%) rotate(0deg); }
+        .theme-toggle .sun { left: 9px; opacity: 0; transform: translateY(-50%) rotate(0deg); } /* Original position */
+        .theme-toggle .moon { right: 9px; opacity: 1; transform: translateY(-50%) rotate(0deg); } /* Original position */
 
         body.dark-mode .theme-toggle {
             background: linear-gradient(145deg, #2d3436, #1a1a1a);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
-        body.dark-mode .theme-toggle::before { transform: translateX(36px); background-color: #f5f6fa; /* Moon */ }
+        body.dark-mode .theme-toggle::before { transform: translateX(36px); background-color: #f5f6fa; /* Moon */ } /* Original translateX */
         body.dark-mode .theme-toggle .sun { opacity: 1; transform: translateY(-50%) rotate(360deg); }
         body.dark-mode .theme-toggle .moon { opacity: 0; transform: translateY(-50%) rotate(-360deg); }
 
-        .theme-toggle::after { /* Glow effect */
-            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+        .theme-toggle::after {
+            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px; /* Original glow area */
             border-radius: 50px;
             background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
             opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 1;
@@ -212,11 +211,11 @@
 
         .page-title {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--primary-blue);
             margin-bottom: 25px;
             font-weight: 600;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border-light);
             transition: color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
@@ -228,7 +227,7 @@
         }
 
         .story-card {
-            background-color: var(--content-bg); /* Use variable */
+            background-color: var(--content-bg);
             border-radius: 10px;
             box-shadow: var(--box-shadow);
             padding: 18px;
@@ -241,7 +240,7 @@
         .story-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--box-shadow-hover);
-            border-color: var(--input-focus-shadow); /* Using this variable for a subtle colored border on hover */
+            border-color: var(--input-focus-shadow);
         }
         body.dark-mode .story-card:hover {
             border-color: var(--input-focus-shadow);
@@ -279,7 +278,7 @@
 
         .story-card .meta-info {
             font-size: 0.8rem;
-            color: var(--text-light); /* Adjusted for less emphasis */
+            color: var(--text-light);
             margin-top: auto;
             opacity: 0.8;
             transition: color var(--toggle-transition-duration) ease;
@@ -294,7 +293,7 @@
             margin-top: 12px;
             padding: 7px 14px;
             background-color: var(--primary-blue);
-            color: var(--white); /* Button text color */
+            color: #ffffff; /* Ensure white text */
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
@@ -303,9 +302,6 @@
             font-size: 0.85rem;
             border: 1px solid transparent;
         }
-        body:not(.dark-mode) .story-card .read-more-btn { color: #ffffff; }
-        body.dark-mode .story-card .read-more-btn { color: #ffffff; }
-
 
         .story-card .read-more-btn:hover {
             background-color: var(--dark-blue);
@@ -314,13 +310,13 @@
 
         .flash-messages {
             position: fixed;
-            top: 90px; /* Initial value, may need adjustment based on mobile header */
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
             width: auto;
             min-width: 280px;
             text-align: center;
+            top: 85px; /* Default for desktop, adjusted from body padding-top */
         }
 
         .flash {
@@ -341,7 +337,7 @@
 
 
         .site-footer-main {
-            background-color: var(--content-bg); /* Use variable */
+            background-color: var(--content-bg);
             text-align: center;
             padding: 12px 0;
             position: fixed;
@@ -353,57 +349,57 @@
             transition: background-color var(--toggle-transition-duration) ease, border-color var(--toggle-transition-duration) ease;
         }
         .site-footer-main p {
-            color: var(--text-light); /* Footer text */
+            color: var(--text-light);
             transition: color var(--toggle-transition-duration) ease;
         }
 
-        /* Mobile Optimizations */
+        /* --- Mobile Optimizations --- */
         @media (max-width: 768px) {
-            body { padding-top: 130px; /* Increased due to stacked header */ }
+            body { padding-top: 155px; /* Increased to ensure full header visibility */ }
 
             .site-header .header-container {
                 flex-direction: column;
-                gap: 12px;
-                align-items: stretch; /* Make items take full width */
+                gap: 12px; /* Original gap */
+                align-items: stretch;
             }
-            .site-header .logo-area { text-align: center; }
-            .site-header .logo-area h1 { font-size: 1.4rem; }
-            .site-header .search-area { width: 100%; max-width: none; }
-            .header-controls { justify-content: center; margin-top: 5px;} /* Center toggle button */
+            .site-header .logo-area { text-align: center; margin-bottom: 0; } /* Removed margin-bottom from here */
+            .site-header .logo-area h1 { font-size: 1.4rem; } /* Kept slightly smaller for mobile balance */
+            .site-header .search-area { width: 100%; max-width: none; order: 2; }
+            .header-controls { justify-content: center; order: 3; margin-top: 10px; } /* Added margin-top for spacing */
 
-            .theme-toggle { /* Adjust toggle size */
-                 width: 60px; height: 30px;
-            }
+            /* Theme toggle size for mobile (reverted to original mobile size from 3rd code block) */
+            .theme-toggle { width: 60px; height: 30px; }
             .theme-toggle::before { width: 26px; height: 26px; }
             body.dark-mode .theme-toggle::before { transform: translateX(30px); }
             .theme-toggle i { font-size: 12px; }
             .theme-toggle .sun { left: 8px; } .theme-toggle .moon { right: 8px; }
 
-            .page-title { font-size: 1.3rem; margin-bottom: 20px; }
+
+            .page-title { font-size: 1.4rem; margin-bottom: 20px; }
             .story-grid { grid-template-columns: 1fr; gap: 16px; }
             .story-card { padding: 16px; }
-            .flash-messages { top: 135px; width: 92%; /* Adjusted for new body padding-top */ }
+            .flash-messages { top: 160px; width: 92%; /* Position below new header height */ }
             .flash { width: 100%; }
         }
 
         @media (max-width: 480px) {
-            body { padding-top: 125px; } /* Fine tune if needed */
-             .site-header .logo-area h1 { font-size: 1.3rem; }
-            .header-search-form input[type="search"] { padding: 8px 12px; font-size: 0.85rem; }
-            .header-search-form button[type="submit"] { padding: 8px 14px; font-size: 0.85rem; }
+            body { padding-top: 150px; /* Adjusted for smaller screens */ }
+            .site-header .logo-area h1 { font-size: 1.3rem; }
+            /* Search bar retains original mobile padding and font size */
+            .header-search-form input[type="search"] { padding: 10px 12px; font-size: 0.9rem; }
+            .header-search-form button[type="submit"] { padding: 10px 14px; font-size: 0.9rem; }
 
-            .theme-toggle { /* Further adjust toggle */
-                 width: 54px; height: 28px;
-            }
+            /* Theme toggle smaller for smallest screens */
+            .theme-toggle { width: 54px; height: 28px; }
             .theme-toggle::before { width: 24px; height: 24px; }
             body.dark-mode .theme-toggle::before { transform: translateX(26px); }
             .theme-toggle i { font-size: 11px; }
             .theme-toggle .sun { left: 7px; } .theme-toggle .moon { right: 7px; }
 
-
-            .story-card h2 { font-size: 1.2rem; }
-            .story-card .summary { font-size: 0.85rem; }
-            .flash-messages { top: 130px; }
+            .story-card h2 { font-size: 1.1rem; }
+            .story-card .summary { font-size: 0.8rem; -webkit-line-clamp: 2; max-height: 65px; }
+            .flash-messages { top: 155px; /* Adjusted for this screen size */ }
+             .page-title { font-size: 1.3rem; }
         }
     </style>
 </head>
